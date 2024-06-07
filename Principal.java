@@ -60,7 +60,7 @@ public class Principal extends Application {
           tcpClient.send(grupoId, user, userInput);
         }
       } catch (IOException e) {
-        System.out.println("> Não foi possível conectar ao servidor");
+        System.out.println("> Erro na conexão com o servidor");
       }
     }).start();
   }

@@ -15,15 +15,19 @@ public class TCPClient extends Client {
   @Override
   public void connect() throws UnknownHostException, IOException {
     socket = new Socket(host, port);
+    output = new ObjectOutputStream(socket.getOutputStream());
     System.out.println("> Conectado ao servidor");
   }
 
   @Override
   public void send(String groupId, String user, String data) throws IOException {
-    String message = new String("send/" + groupId + "/" + user + "/" + data);
-    output = new ObjectOutputStream(socket.getOutputStream());
-    output.writeObject(message);
-    output.flush();
+    if (socket.isConnected()) {
+      String message = new String("send/" + groupId + "/" + user + "/" + data);
+      output.writeObject(message);
+      output.flush();
+    } else {
+      System.out.println("> Não conectado");
+    }
   }
 
   @Override
@@ -45,7 +49,7 @@ public class TCPClient extends Client {
         do {
           receivedObject = input.readObject();
           String message = (String) receivedObject;
-          System.out.println("> Mensagem do servidor: " + message);
+          System.out.println("Servidor: " + message);
         } while (receivedObject != null);
 
       } catch (IOException | ClassNotFoundException e) {
