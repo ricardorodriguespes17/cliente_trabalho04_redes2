@@ -14,7 +14,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import controller.Controller;
+import model.Client;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.UnknownHostException;
 
 public class Principal extends Application {
   @Override
@@ -32,6 +37,31 @@ public class Principal extends Application {
   }
 
   public static void main(String[] args) {
-    launch(args);
+    String grupoId = "grupo-teste";
+    String user = "192.168.1.8";
+
+    Client tcpClient = Client.createClient("TCP", "192.168.1.11", 6789);
+
+    try {
+      tcpClient.connect();
+      tcpClient.receive();
+    } catch (UnknownHostException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    }
+
+    new Thread(() -> {
+      try (BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in))) {
+        String userInput;
+        while ((userInput = stdIn.readLine()) != null) {
+          tcpClient.send(grupoId, user, userInput);
+        }
+      } catch (IOException e) {
+        System.out.println("> Não foi possível conectar ao servidor");
+      }
+    }).start();
   }
 }
