@@ -24,10 +24,9 @@ import java.net.UnknownHostException;
 public class Principal extends Application {
   @Override
   public void start(Stage stage) throws Exception {
-    Parent root = FXMLLoader.load(getClass().getResource("view/Screen.fxml"));
+    Parent root = FXMLLoader.load(getClass().getResource("view/MainScreen.fxml"));
     Scene scene = new Scene(root);
     stage.setScene(scene);
-    stage.setResizable(false);
     stage.getIcons().add(new Image("view/img/logo.png"));
     stage.setOnCloseRequest(t -> {
       Platform.exit();
@@ -37,8 +36,12 @@ public class Principal extends Application {
   }
 
   public static void main(String[] args) {
+    launch(args);
+  }
+
+  public void startClient() {
     String grupoId = "grupo-teste";
-    String user = "192.168.1.8";
+    String user = "Ricardo";
 
     Client tcpClient = Client.createClient("TCP", "192.168.1.11", 6789);
 

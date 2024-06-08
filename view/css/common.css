@@ -1,0 +1,19 @@
+Button {
+  -fx-background-color: transparent;
+  -fx-pref-width: 50;
+  -fx-pref-height: 50;
+  -fx-cursor: hand;
+}
+
+Button * {
+  -fx-text-fill: -fx-text;
+  -fx-fill: -fx-text;
+}
+
+Button:hover {
+  -fx-opacity: 0.8;
+}
+
+Label {
+  -fx-text-fill: -fx-text;
+}
