@@ -5,9 +5,10 @@ Button {
   -fx-cursor: hand;
 }
 
-Button * {
+Button, Button * {
   -fx-text-fill: -fx-text;
   -fx-fill: -fx-text;
+  -fx-stoke: -fx-text;
 }
 
 Button:hover {
@@ -16,4 +17,24 @@ Button:hover {
 
 Label {
   -fx-text-fill: -fx-text;
+}
+
+TextField {
+  -fx-background-color: transparent;
+  -fx-font-size: 16;
+  -fx-text-fill: -fx-text;
+}
+
+ScrollPane {
+  -fx-background-color: transparent;
+  -fx-border-width: 0;
+  -fx-padding: 0;
+}
+
+ScrollPane .scroll-bar {
+  -fx-background-color: -fx-background;
+}
+
+ScrollPane .scroll-bar .thumb {
+  -fx-background-color: -fx-border;
 }

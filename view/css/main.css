@@ -20,20 +20,6 @@ BorderPane {
   -fx-alignment: center;
 }
 
-ScrollPane {
-  -fx-background-color: transparent;
-  -fx-border-width: 0;
-  -fx-padding: 0;
-}
-
-ScrollPane .scroll-bar {
-  -fx-background-color: -fx-background;
-}
-
-ScrollPane .scroll-bar .thumb {
-  -fx-background-color: -fx-border;
-}
-
 .main {
   -fx-alignment: top_center;
 }

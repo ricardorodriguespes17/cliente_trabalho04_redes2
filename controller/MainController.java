@@ -14,7 +14,10 @@ import java.util.ResourceBundle;
 
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
@@ -22,6 +25,7 @@ import javafx.util.Duration;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class MainController implements Initializable {
 
@@ -83,7 +87,17 @@ public class MainController implements Initializable {
   private void openChat(MouseEvent event) {
     HBox chatBox = (HBox) event.getSource();
 
-    System.out.println("Abrindo conversa " + chatBox.getId());
+    ChatController.chatId = chatBox.getId();
+
+    try {
+      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/ChatScreen.fxml"));
+      Parent newScreen = fxmlLoader.load();
+      Stage stage = (Stage) chatBox.getScene().getWindow();
+      stage.setTitle("Chat");
+      stage.setScene(new Scene(newScreen));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   @Override

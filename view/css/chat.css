@@ -1,0 +1,91 @@
+BorderPane {
+  -fx-background-color: -fx-background;
+}
+
+.header {
+  -fx-background-color: transparent;
+  -fx-border-color: -fx-border;
+  -fx-border-width: 0 0 1 0;
+  -fx-pref-height: 60;
+  -fx-alignment: center_left;
+  -fx-padding: 7 10 7 10;
+}
+
+.header Label {
+  -fx-font-size: 22;
+}
+
+.header HBox {
+  -fx-alignment: center;
+}
+
+.header HBox {
+  -fx-alignment: center;
+}
+
+.main {
+  -fx-alignment: bottom_center;
+  -fx-padding: 0 10 0 10;
+  -fx-spacing: 5;
+}
+
+.main HBox HBox {
+  -fx-wrap-text: true;
+  -fx-max-width: 300;
+  -fx-min-height: 30;
+  -fx-padding: 5 8 5 8;
+}
+
+.main .serverMessageBox {
+  -fx-alignment: center;
+}
+
+.main .otherMessageBox HBox {
+  -fx-background-radius: 10;
+  -fx-background-color: -fx-secondary-color;
+  -fx-alignment: center_left;
+}
+
+.main .selfMessageBox {
+  -fx-alignment: center_right;
+}
+
+.main .selfMessageBox HBox {
+  -fx-background-radius: 10;
+  -fx-background-color: -fx-primary-color;
+  -fx-alignment: center_left;
+}
+
+.main HBox Label, .main HBox Label {
+  -fx-text-fill: -fx-text;
+  -fx-font-size: 14;
+}
+
+.footer {
+  -fx-alignment: center;
+  -fx-pref-height: 60;
+  -fx-padding: 10;
+  -fx-spacing: 7;
+}
+
+.footer HBox {
+  -fx-background-color: -fx-secondary-color;
+  -fx-background-radius: 20;
+  -fx-alignment: center;
+}
+
+.footer HBox Button {
+  -fx-pref-height: 28;
+  -fx-pref-width: 28;
+}
+
+.buttonSend {
+  -fx-pref-width:36;
+  -fx-pref-height:36;
+  -fx-background-radius: 20;
+  -fx-background-color: -fx-secondary-color;
+}
+
+.buttonSend * {
+  -fx-fill: -fx-text;
+}
