@@ -13,6 +13,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.App;
+import model.Chat;
 import model.Message;
 
 public class ChatController implements Initializable {
@@ -25,6 +27,7 @@ public class ChatController implements Initializable {
   Label chatNameLabel;
 
   public static String chatId = null;
+  private Chat chat;
 
   @FXML
   private void goToMainScreen() {
@@ -58,11 +61,23 @@ public class ChatController implements Initializable {
     return parent;
   }
 
+  private void renderMessages() {
+    mainBox.getChildren().clear();
+
+    for (Message message : chat.getMessages()) {
+      message.setRead(true);
+      HBox hbox = createMessageBox(new Message(message.getText(), message.getUserId(), message.getDateTime()));
+      mainBox.getChildren().add(hbox);
+    }
+  }
+
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     scrollMainBox.setFitToWidth(true);
-    generateRandomMessages();
     chatNameLabel.setText(chatId);
+    chat = App.getChatById(chatId);
+    renderMessages();
+    scrollMainBox.setVvalue(1.0);
   }
 
   private void generateRandomMessages() {
@@ -80,7 +95,6 @@ public class ChatController implements Initializable {
 
       HBox hbox = createMessageBox(new Message("olá, mundo!", userId, "19:30"));
       mainBox.getChildren().add(hbox);
-      scrollMainBox.setVvalue(1.0);
     }
   }
 }

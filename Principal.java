@@ -14,7 +14,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import model.App;
+import model.Chat;
 import model.Client;
+import model.Message;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -36,7 +39,16 @@ public class Principal extends Application {
   }
 
   public static void main(String[] args) {
+    createRandonsChats();
     launch(args);
+  }
+
+  public static void createRandonsChats() {
+    Chat chatRedes = new Chat("redes-2", "Redes II");
+    Message message = new Message("Olá mundo", "11", "20:47");
+
+    chatRedes.addMessage(message);
+    App.addChat(chatRedes);
   }
 
   public void startClient() {

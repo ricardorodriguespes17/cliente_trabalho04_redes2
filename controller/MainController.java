@@ -22,6 +22,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
+import model.App;
+import model.Chat;
+import model.Message;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -100,10 +103,23 @@ public class MainController implements Initializable {
     }
   }
 
+  private void renderChats() {
+    mainBox.getChildren().clear();
+
+    for (Chat chat : App.getChats()) {
+      Message lastMessage = chat.getLastMessage();
+      int unreadsCount = chat.getNumberOfMessagesUnread();
+
+      HBox hbox = createChatBox(chat.getChatId(), chat.getChatName(), lastMessage.getText(), lastMessage.getDateTime(),
+          unreadsCount);
+      mainBox.getChildren().add(hbox);
+    }
+  }
+
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     scrollMainBox.setFitToWidth(true);
-    generateRandomChats();
+    renderChats();
   }
 
   private void generateRandomChats() {
