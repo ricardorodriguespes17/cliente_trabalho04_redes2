@@ -6,6 +6,7 @@ import java.util.List;
 public class Chat {
   private String chatId;
   private String chatName;
+  private String description;
   private List<Message> messages;
 
   public Chat(String chatId, String chatName) {
@@ -13,6 +14,16 @@ public class Chat {
     this.chatName = chatName;
     messages = new ArrayList<>();
     messages.add(new Message("Início do chat", "server", "00:00"));
+  }
+
+  public Chat(String chatId, String chatName, String description) {
+    this.chatId = chatId;
+    this.chatName = chatName;
+    messages = new ArrayList<>();
+    messages.add(new Message("Início do chat", "server", "00:00"));
+    if (description == null || description.equals("")) {
+      this.description = null;
+    }
   }
 
   public String getChatId() {
@@ -32,7 +43,13 @@ public class Chat {
   }
 
   public Message getLastMessage() {
-    return messages.get(messages.size() - 1);
+    Message message = messages.get(messages.size() - 1);
+
+    if (message.getUserId().equals("server")) {
+      return null;
+    }
+
+    return message;
   }
 
   public int getNumberOfMessagesUnread() {
@@ -59,6 +76,14 @@ public class Chat {
 
   public void setMessages(List<Message> messages) {
     this.messages = messages;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
   }
 
 }

@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -38,7 +39,7 @@ public class ChatController implements Initializable {
   private void sendMessage() {
     String value = inputMessage.getText();
 
-    if (value.trim() == "")
+    if (value.trim().equals(""))
       return;
 
     LocalTime currentTime = LocalTime.now();
@@ -92,6 +93,12 @@ public class ChatController implements Initializable {
       HBox hbox = createMessageBox(new Message(message.getText(), message.getUserId(), message.getDateTime()));
       mainBox.getChildren().add(hbox);
     }
+
+    mainBox.heightProperty().addListener((observable, oldValue, newValue) -> {
+      scrollMainBox.setVvalue(1.0);
+    });
+
+    Platform.runLater(() -> scrollMainBox.setVvalue(1.0));
   }
 
   @Override
@@ -100,7 +107,6 @@ public class ChatController implements Initializable {
     chat = App.getChatById(chatId);
     chatNameLabel.setText(chat.getChatName());
     renderMessages();
-    scrollMainBox.setVvalue(1.0);
   }
 
 }

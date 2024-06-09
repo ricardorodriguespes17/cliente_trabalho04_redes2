@@ -52,6 +52,18 @@ public class MainController implements Initializable {
   TextField inputSearch;
 
   @FXML
+  private void goToCreateGroup() {
+    try {
+      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/NewGroupScreen.fxml"));
+      Parent mainScreen = fxmlLoader.load();
+      Stage stage = (Stage) scrollMainBox.getScene().getWindow();
+      stage.setScene(new Scene(mainScreen));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  @FXML
   private void openSearhBox() {
     inputSearch = new TextField();
     HBox.setHgrow(inputSearch, Priority.ALWAYS);
@@ -170,15 +182,24 @@ public class MainController implements Initializable {
     for (Chat chat : chats) {
       Message lastMessage = chat.getLastMessage();
       int unreadsCount = chat.getNumberOfMessagesUnread();
-      User user = App.getUserById(lastMessage.getUserId());
-      String userName = user.getUserName();
-      String messageTime = lastMessage.getDateTime().substring(0, 5);
+      String userName = "";
+      String messageTime = "";
+      String textLastMessage = "";
 
-      if (lastMessage.getUserId() == "10") {
-        userName = "Você";
+      if (lastMessage != null) {
+        messageTime = lastMessage.getDateTime().substring(0, 5);
+        User user = App.getUserById(lastMessage.getUserId());
+
+        if (user != null) {
+          userName = user.getUserName();
+        }
+
+        if (lastMessage.getUserId() == "10") {
+          userName = "Você";
+        }
+
+        textLastMessage = userName + ": " + lastMessage.getText();
       }
-
-      String textLastMessage = userName + ": " + lastMessage.getText();
 
       HBox hbox = createChatBox(chat.getChatId(), chat.getChatName(), textLastMessage, messageTime, unreadsCount);
       mainBox.getChildren().add(hbox);

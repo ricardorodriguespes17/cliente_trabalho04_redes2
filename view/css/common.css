@@ -1,3 +1,7 @@
+BorderPane {
+  -fx-background-color: -fx-background;
+}
+
 Button {
   -fx-background-color: transparent;
   -fx-pref-width: 50;
@@ -19,7 +23,7 @@ Label {
   -fx-text-fill: -fx-text;
 }
 
-TextField {
+TextField, TextArea {
   -fx-background-color: transparent;
   -fx-font-size: 16;
   -fx-text-fill: -fx-text;

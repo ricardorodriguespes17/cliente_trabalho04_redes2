@@ -65,7 +65,7 @@
       </HBox>
    </bottom>
    <center>
-      <ScrollPane fx:id="scrollMainBox" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <ScrollPane fx:id="scrollMainBox" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vvalue="1.0" BorderPane.alignment="CENTER">
          <content>
             <BorderPane prefWidth="490.0">
                <center>
@@ -175,6 +175,15 @@
                               <HBox>
                                  <children>
                                     <Label text="Mensagem" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                        <HBox styleClass="selfMessageBox">
+                           <children>
+                              <HBox>
+                                 <children>
+                                    <Label text="Umamensagemmaior,bemgrande,maioraindaaaaaaaaaaaldkjhaslkdajksldahsdkasdahsklasdlkahdlkasjdlkasdklasdjhalskhfaslkhfaslkf" textOverrun="CLIP" wrapText="true" />
                                  </children>
                               </HBox>
                            </children>
