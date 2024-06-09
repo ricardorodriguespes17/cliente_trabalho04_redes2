@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class App {
+  private static User user = null;
   private static List<Chat> chats = new ArrayList<>();
   private static List<User> users = new ArrayList<>();
 
@@ -63,5 +64,21 @@ public class App {
 
   public static void removeUser(User user) {
     users.remove(user);
+  }
+
+  public static User getUser() {
+    return user;
+  }
+
+  public static void setUser(User user) {
+    App.user = user;
+  }
+
+  public static void setChats(List<Chat> chats) {
+    App.chats = chats;
+  }
+
+  public static void setUsers(List<User> users) {
+    App.users = users;
   }
 }

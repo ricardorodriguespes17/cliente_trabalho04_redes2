@@ -21,11 +21,11 @@
 
 .main {
   -fx-alignment: bottom_center;
-  -fx-padding: 0 10 0 10;
+  -fx-padding: 7 10 0 10;
   -fx-spacing: 5;
 }
 
-.main HBox HBox {
+.main HBox VBox {
   -fx-wrap-text: true;
   -fx-max-width: 300;
   -fx-min-height: 30;
@@ -36,7 +36,7 @@
   -fx-alignment: center;
 }
 
-.main .otherMessageBox HBox {
+.main .otherMessageBox VBox {
   -fx-background-radius: 10;
   -fx-background-color: -fx-secondary-color;
   -fx-alignment: center_left;
@@ -46,15 +46,29 @@
   -fx-alignment: center_right;
 }
 
-.main .selfMessageBox HBox {
+.main .selfMessageBox VBox {
   -fx-background-radius: 10;
   -fx-background-color: -fx-primary-color;
   -fx-alignment: center_left;
 }
 
-.main HBox Label, .main HBox Label {
+.main .messageTextBox {
+  -fx-alignment: bottom_left;
+  -fx-spacing: 8;
+}
+
+.main Label, .main Label {
   -fx-text-fill: -fx-text;
   -fx-font-size: 14;
+}
+
+.main .messageUserName {
+  -fx-font-weight: bold;
+}
+
+.main .messageTime {
+  -fx-font-size: 10;
+  -fx-min-width: 24;
 }
 
 .footer {

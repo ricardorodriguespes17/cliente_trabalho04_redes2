@@ -185,16 +185,17 @@ public class MainController implements Initializable {
       String userName = "";
       String messageTime = "";
       String textLastMessage = "";
+      User user = App.getUser();
 
       if (lastMessage != null) {
-        messageTime = lastMessage.getDateTime().substring(0, 5);
-        User user = App.getUserById(lastMessage.getUserId());
+        messageTime = lastMessage.getDateToChat();
+        User messageUser = App.getUserById(lastMessage.getUserId());
 
-        if (user != null) {
-          userName = user.getUserName();
+        if (messageUser != null) {
+          userName = messageUser.getName();
         }
 
-        if (lastMessage.getUserId() == "10") {
+        if (lastMessage.getUserId().equals(user.getUserId())) {
           userName = "Você";
         }
 

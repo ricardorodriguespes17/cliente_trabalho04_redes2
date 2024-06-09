@@ -80,112 +80,33 @@
                               </HBox>
                            </children>
                         </HBox>
-                        <HBox styleClass="selfMessageBox">
-                           <children>
-                              <HBox>
-                                 <children>
-                                    <Label text="Mensagem" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </HBox>
                         <HBox styleClass="otherMessageBox">
                            <children>
-                              <HBox>
+                              <VBox>
                                  <children>
-                                    <Label text="Mensagem" />
+                                    <Label styleClass="messageUserName" text="Marlos" />
+                                    <HBox styleClass="messageTextBox">
+                                       <children>
+                                          <Label text="Uma mensagem maior, bem grande adlakhdlakshalkfhakfhkfahsdlksdflkadjfaklsdfj" textOverrun="CLIP" wrapText="true" />
+                                          <Label styleClass="messageTime" text="20:30" />
+                                       </children>
+                                    </HBox>
                                  </children>
-                              </HBox>
-                           </children>
-                        </HBox>
-                        <HBox styleClass="otherMessageBox">
-                           <children>
-                              <HBox>
-                                 <children>
-                                    <Label text="Uma mensagem maior, bem grande" textOverrun="CLIP" wrapText="true" />
-                                 </children>
-                              </HBox>
+                              </VBox>
                            </children>
                         </HBox>
                         <HBox styleClass="selfMessageBox">
                            <children>
-                              <HBox>
+                              <VBox>
                                  <children>
-                                    <Label text="Mensagem" />
+                                    <HBox styleClass="messageTextBox">
+                                       <children>
+                                          <Label text="Uma mensagem maior, bem grande adlakhdlakshalkfhakfhkfahsdlksdflkadjfaklsdfj" textOverrun="CLIP" wrapText="true" />
+                                          <Label styleClass="messageTime" text="20:30" />
+                                       </children>
+                                    </HBox>
                                  </children>
-                              </HBox>
-                           </children>
-                        </HBox>
-                        <HBox styleClass="otherMessageBox">
-                           <children>
-                              <HBox>
-                                 <children>
-                                    <Label text="Mensagem" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </HBox>
-                        <HBox styleClass="otherMessageBox">
-                           <children>
-                              <HBox>
-                                 <children>
-                                    <Label text="Uma mensagem maior, bem grande" textOverrun="CLIP" wrapText="true" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </HBox>
-                        <HBox styleClass="selfMessageBox">
-                           <children>
-                              <HBox>
-                                 <children>
-                                    <Label text="Umamensagemmaior,bemgrande,maioraindaaaaaaaaaaaldkjhaslkdajksldahsdkasdahsklasdlkahdlkasjdlkasdklasdjhalskhfaslkhfaslkf" textOverrun="CLIP" wrapText="true" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </HBox>
-                        <HBox styleClass="otherMessageBox">
-                           <children>
-                              <HBox>
-                                 <children>
-                                    <Label text="Uma mensagem maior, bem grande" textOverrun="CLIP" wrapText="true" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </HBox>
-                        <HBox styleClass="selfMessageBox">
-                           <children>
-                              <HBox>
-                                 <children>
-                                    <Label text="Mensagem" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </HBox>
-                        <HBox styleClass="selfMessageBox">
-                           <children>
-                              <HBox>
-                                 <children>
-                                    <Label text="Mensagem" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </HBox>
-                        <HBox styleClass="selfMessageBox">
-                           <children>
-                              <HBox>
-                                 <children>
-                                    <Label text="Mensagem" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </HBox>
-                        <HBox styleClass="selfMessageBox">
-                           <children>
-                              <HBox>
-                                 <children>
-                                    <Label text="Umamensagemmaior,bemgrande,maioraindaaaaaaaaaaaldkjhaslkdajksldahsdkasdahsklasdlkahdlkasjdlkasdklasdjhalskhfaslkhfaslkf" textOverrun="CLIP" wrapText="true" />
-                                 </children>
-                              </HBox>
+                              </VBox>
                            </children>
                         </HBox>
                      </children>

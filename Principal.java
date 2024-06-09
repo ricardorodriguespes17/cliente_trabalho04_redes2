@@ -24,6 +24,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.UnknownHostException;
+import java.time.LocalDateTime;
 
 public class Principal extends Application {
   @Override
@@ -32,6 +33,7 @@ public class Principal extends Application {
     Scene scene = new Scene(root);
     stage.setScene(scene);
     stage.getIcons().add(new Image("view/img/logo.png"));
+    stage.setTitle("Instant Messaging");
     stage.setOnCloseRequest(t -> {
       Platform.exit();
       System.exit(0);
@@ -46,17 +48,24 @@ public class Principal extends Application {
 
   public static void createRandonsChats() {
     Chat chatRedes = new Chat("redes-2", "Redes II");
-    Message message = new Message("Olá mundo", "11", "20:47");
+
+    User user = new User("10", "Ricardo");
+    User user2 = new User("11", "Marlos");
+
+    LocalDateTime today = LocalDateTime.now();
+    LocalDateTime dateTime = today.minusDays(0);
+    Message message = new Message("Olá mundo", user2.getUserId(), dateTime);
 
     chatRedes.addMessage(message);
-    App.addUser(new User("10", "Ricardo"));
-    App.addUser(new User("11", "Marlos"));
+    App.addUser(user);
+    App.addUser(user2);
+    App.setUser(user);
     App.addChat(chatRedes);
   }
 
   public void startClient() {
     String grupoId = "grupo-teste";
-    String user = "Ricardo";
+    User user = App.getUser();
 
     Client tcpClient = Client.createClient("TCP", "192.168.1.11", 6789);
 
@@ -75,7 +84,7 @@ public class Principal extends Application {
       try (BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in))) {
         String userInput;
         while ((userInput = stdIn.readLine()) != null) {
-          tcpClient.send(grupoId, user, userInput);
+          tcpClient.send(grupoId, user.getName(), userInput);
         }
       } catch (IOException e) {
         System.out.println("> Erro na conexão com o servidor");

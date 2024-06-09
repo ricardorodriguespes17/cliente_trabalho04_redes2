@@ -1,6 +1,8 @@
 package model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Chat {
@@ -13,14 +15,14 @@ public class Chat {
     this.chatId = chatId;
     this.chatName = chatName;
     messages = new ArrayList<>();
-    messages.add(new Message("Início do chat", "server", "00:00"));
   }
 
   public Chat(String chatId, String chatName, String description) {
     this.chatId = chatId;
     this.chatName = chatName;
     messages = new ArrayList<>();
-    messages.add(new Message("Início do chat", "server", "00:00"));
+    LocalDateTime currentDateTime = LocalDateTime.now();
+    messages.add(new Message("Início do chat", "server", currentDateTime));
     if (description == null || description.equals("")) {
       this.description = null;
     }
@@ -57,7 +59,7 @@ public class Chat {
 
     for (Message message : messages) {
       boolean notIsServer = !message.getUserId().equals("server");
-      boolean notIsSelf = !message.getUserId().equals("10");
+      boolean notIsSelf = !message.getUserId().equals(App.getUser().getUserId());
       if (!message.isRead() && notIsServer && notIsSelf) {
         count++;
       }
@@ -72,9 +74,11 @@ public class Chat {
 
   public void addMessage(Message message) {
     messages.add(message);
+    Collections.sort(messages);
   }
 
   public void setMessages(List<Message> messages) {
+    Collections.sort(messages);
     this.messages = messages;
   }
 

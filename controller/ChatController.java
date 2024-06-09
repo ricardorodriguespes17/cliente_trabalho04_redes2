@@ -1,10 +1,8 @@
 package controller;
 
 import java.net.URL;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
-
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +18,7 @@ import javafx.stage.Stage;
 import model.App;
 import model.Chat;
 import model.Message;
+import model.User;
 
 public class ChatController implements Initializable {
 
@@ -38,15 +37,14 @@ public class ChatController implements Initializable {
   @FXML
   private void sendMessage() {
     String value = inputMessage.getText();
+    User user = App.getUser();
 
     if (value.trim().equals(""))
       return;
 
-    LocalTime currentTime = LocalTime.now();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-    String formattedTime = currentTime.format(formatter);
+    LocalDateTime currentTime = LocalDateTime.now();
 
-    chat.addMessage(new Message(value.trim(), "10", formattedTime));
+    chat.addMessage(new Message(value.trim(), user.getUserId(), currentTime));
     inputMessage.setText("");
     renderMessages();
   }
@@ -65,22 +63,35 @@ public class ChatController implements Initializable {
 
   private HBox createMessageBox(Message message) {
     HBox parent = new HBox();
+    VBox vbox = new VBox();
     HBox hbox = new HBox();
     Label messageLabel = new Label(message.getText());
+    Label messageTimeLabel = new Label(message.getTime());
     String userId = message.getUserId();
+    User user = App.getUser();
 
-    if (userId.equals("10")) {
+    messageTimeLabel.getStyleClass().add("messageTime");
+    hbox.getStyleClass().add("messageTextBox");
+
+    if (userId.equals(user.getUserId())) {
       parent.getStyleClass().add("selfMessageBox");
+      hbox.getChildren().add(messageTimeLabel);
     } else if (userId.equals("server")) {
       parent.getStyleClass().add("serverMessageBox");
     } else {
+      User messageUser = App.getUserById(userId);
       parent.getStyleClass().add("otherMessageBox");
+      Label userNameLabel = new Label(messageUser.getName());
+      userNameLabel.getStyleClass().add("messageUserName");
+      vbox.getChildren().add(userNameLabel);
+      hbox.getChildren().add(messageTimeLabel);
     }
 
     messageLabel.setWrapText(true);
 
-    hbox.getChildren().add(messageLabel);
-    parent.getChildren().add(hbox);
+    hbox.getChildren().add(0, messageLabel);
+    vbox.getChildren().add(hbox);
+    parent.getChildren().add(vbox);
 
     return parent;
   }
