@@ -10,6 +10,7 @@
 package controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.animation.FadeTransition;
@@ -18,8 +19,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import model.App;
@@ -28,6 +32,7 @@ import model.Message;
 import model.User;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -36,7 +41,57 @@ public class MainController implements Initializable {
   @FXML
   ScrollPane scrollMainBox;
   @FXML
+  HBox headerBox;
+  @FXML
+  Region regionSepator;
+  @FXML
+  Button buttonSearch;
+  @FXML
   VBox mainBox;
+
+  TextField inputSearch;
+
+  @FXML
+  private void openSearhBox() {
+    inputSearch = new TextField();
+    HBox.setHgrow(inputSearch, Priority.ALWAYS);
+    HBox.setHgrow(regionSepator, Priority.NEVER);
+
+    headerBox.getChildren().remove(0);
+    headerBox.getChildren().add(0, inputSearch);
+    inputSearch.setOnKeyReleased(event -> {
+      if (event.getCode().equals(KeyCode.ESCAPE)) {
+        escapeSearch();
+      } else {
+        onSearch();
+      }
+    });
+    inputSearch.setOnAction(event -> {
+      escapeSearch();
+    });
+  }
+
+  private void onSearch() {
+    String text = inputSearch.getText();
+
+    if (text.trim() == "") {
+      renderChats(null);
+      return;
+    }
+
+    renderChats(App.getChatsByText(text));
+  }
+
+  private void escapeSearch() {
+    Label title = new Label("Instant Messaging");
+
+    HBox.setHgrow(regionSepator, Priority.ALWAYS);
+    headerBox.getChildren().remove(0);
+    headerBox.getChildren().add(0, title);
+    buttonSearch.setOnAction(event -> {
+      openSearhBox();
+    });
+  }
 
   private HBox createChatBox(String chatId, String chatName, String lastMessage, String lastMessageTime,
       int lastMessagesCount) {
@@ -104,10 +159,15 @@ public class MainController implements Initializable {
     }
   }
 
-  private void renderChats() {
-    mainBox.getChildren().clear();
+  private void renderChats(List<Chat> listChat) {
+    List<Chat> chats = listChat;
 
-    for (Chat chat : App.getChats()) {
+    if (listChat == null) {
+      chats = App.getChats();
+    }
+
+    mainBox.getChildren().clear();
+    for (Chat chat : chats) {
       Message lastMessage = chat.getLastMessage();
       int unreadsCount = chat.getNumberOfMessagesUnread();
       User user = App.getUserById(lastMessage.getUserId());
@@ -128,7 +188,7 @@ public class MainController implements Initializable {
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     scrollMainBox.setFitToWidth(true);
-    renderChats();
+    renderChats(null);
   }
 
 }

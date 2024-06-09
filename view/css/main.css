@@ -16,6 +16,10 @@ BorderPane {
   -fx-font-size: 24;
 }
 
+.header TextField {
+  -fx-background-color: -fx-border;
+}
+
 .header HBox {
   -fx-alignment: center;
 }

@@ -17,6 +17,20 @@ public class App {
     return null;
   }
 
+  public static List<Chat> getChatsByText(String text) {
+    List<Chat> result = new ArrayList<>();
+
+    for (Chat chat : chats) {
+      boolean containText = chat.getChatName().toLowerCase().contains(text.toLowerCase());
+
+      if (containText) {
+        result.add(chat);
+      }
+    }
+
+    return result;
+  }
+
   public static List<Chat> getChats() {
     return chats;
   }
