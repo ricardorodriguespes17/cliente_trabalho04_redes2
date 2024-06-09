@@ -1,6 +1,8 @@
 package controller;
 
 import java.net.URL;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -10,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -25,9 +28,27 @@ public class ChatController implements Initializable {
   VBox mainBox;
   @FXML
   Label chatNameLabel;
+  @FXML
+  TextField inputMessage;
 
   public static String chatId = null;
   private Chat chat;
+
+  @FXML
+  private void sendMessage() {
+    String value = inputMessage.getText();
+
+    if (value.trim() == "")
+      return;
+
+    LocalTime currentTime = LocalTime.now();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+    String formattedTime = currentTime.format(formatter);
+
+    chat.addMessage(new Message(value.trim(), "10", formattedTime));
+    inputMessage.setText("");
+    renderMessages();
+  }
 
   @FXML
   private void goToMainScreen() {
@@ -47,13 +68,15 @@ public class ChatController implements Initializable {
     Label messageLabel = new Label(message.getText());
     String userId = message.getUserId();
 
-    if (userId.equals("12")) {
+    if (userId.equals("10")) {
       parent.getStyleClass().add("selfMessageBox");
     } else if (userId.equals("server")) {
       parent.getStyleClass().add("serverMessageBox");
     } else {
       parent.getStyleClass().add("otherMessageBox");
     }
+
+    messageLabel.setWrapText(true);
 
     hbox.getChildren().add(messageLabel);
     parent.getChildren().add(hbox);
@@ -74,27 +97,10 @@ public class ChatController implements Initializable {
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     scrollMainBox.setFitToWidth(true);
-    chatNameLabel.setText(chatId);
     chat = App.getChatById(chatId);
+    chatNameLabel.setText(chat.getChatName());
     renderMessages();
     scrollMainBox.setVvalue(1.0);
   }
 
-  private void generateRandomMessages() {
-    mainBox.getChildren().clear();
-
-    mainBox.getChildren().add(createMessageBox(new Message("Início do chat", "server", "14:30")));
-
-    for (int i = 1; i <= 30; i++) {
-      String userId = "11";
-      double random = Math.random() * 6;
-
-      if (random <= 3) {
-        userId = "12";
-      }
-
-      HBox hbox = createMessageBox(new Message("olá, mundo!", userId, "19:30"));
-      mainBox.getChildren().add(hbox);
-    }
-  }
 }

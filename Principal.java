@@ -18,6 +18,7 @@ import model.App;
 import model.Chat;
 import model.Client;
 import model.Message;
+import model.User;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -48,6 +49,8 @@ public class Principal extends Application {
     Message message = new Message("Olá mundo", "11", "20:47");
 
     chatRedes.addMessage(message);
+    App.addUser(new User("10", "Ricardo"));
+    App.addUser(new User("11", "Marlos"));
     App.addChat(chatRedes);
   }
 

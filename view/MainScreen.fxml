@@ -78,7 +78,7 @@
                               </VBox>
                               <VBox styleClass="lastMessageBox">
                                  <children>
-                                    <Label styleClass="lastMessageTime" text="Ontem" />
+                                    <Label styleClass="lastMessageTime" text="21/05/2024" />
                                     <Label styleClass="messagesCount" text="1" />
                                  </children>
                               </VBox>

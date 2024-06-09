@@ -50,7 +50,8 @@ BorderPane {
 
 .main > HBox .lastMessageBox {
   -fx-spacing: 3;
-  -fx-alignment: center;
+  -fx-alignment: center_right;
+  -fx-min-width: 70;
 }
 
 .main > HBox .lastMessageTime {

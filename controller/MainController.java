@@ -25,6 +25,7 @@ import javafx.util.Duration;
 import model.App;
 import model.Chat;
 import model.Message;
+import model.User;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -109,9 +110,17 @@ public class MainController implements Initializable {
     for (Chat chat : App.getChats()) {
       Message lastMessage = chat.getLastMessage();
       int unreadsCount = chat.getNumberOfMessagesUnread();
+      User user = App.getUserById(lastMessage.getUserId());
+      String userName = user.getUserName();
+      String messageTime = lastMessage.getDateTime().substring(0, 5);
 
-      HBox hbox = createChatBox(chat.getChatId(), chat.getChatName(), lastMessage.getText(), lastMessage.getDateTime(),
-          unreadsCount);
+      if (lastMessage.getUserId() == "10") {
+        userName = "Você";
+      }
+
+      String textLastMessage = userName + ": " + lastMessage.getText();
+
+      HBox hbox = createChatBox(chat.getChatId(), chat.getChatName(), textLastMessage, messageTime, unreadsCount);
       mainBox.getChildren().add(hbox);
     }
   }
@@ -122,14 +131,4 @@ public class MainController implements Initializable {
     renderChats();
   }
 
-  private void generateRandomChats() {
-    mainBox.getChildren().clear();
-
-    for (int i = 1; i <= 10; i++) {
-      int count = (int) Math.floor(Math.random() * 5);
-
-      HBox hbox = createChatBox("redes-" + i, "Redes " + i, "Marlos: Hello world!", "10:30", count);
-      mainBox.getChildren().add(hbox);
-    }
-  }
 }
