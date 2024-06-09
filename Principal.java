@@ -47,7 +47,7 @@ public class Principal extends Application {
   }
 
   public static void createRandonsChats() {
-    Chat chatRedes = new Chat("redes-2", "Redes II");
+    Chat chatRedes = new Chat("Redes II", "Grupo da matéria de Redes II 2024.1");
 
     User user = new User("10", "Ricardo");
     User user2 = new User("11", "Marlos");

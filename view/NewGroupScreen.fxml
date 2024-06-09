@@ -9,8 +9,8 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
-
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NewGroupController">
    <stylesheets>
@@ -21,6 +21,11 @@
    <top>
       <HBox styleClass="header" BorderPane.alignment="CENTER">
          <children>
+            <Button mnemonicParsing="false" onAction="#goToMainScreen">
+               <graphic>
+                  <SVGPath content="M15.293 3.293 6.586 12l8.707 8.707 1.414-1.414L9.414 12l7.293-7.293-1.414-1.414z" />
+               </graphic>
+            </Button>
             <Label text="Criar grupo" />
          </children>
       </HBox>
@@ -39,16 +44,6 @@
                <center>
                   <VBox styleClass="main" BorderPane.alignment="CENTER">
                      <children>
-                        <VBox>
-                           <children>
-                              <Label text="Código do grupo">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="inputChatId" />
-                           </children>
-                        </VBox>
                         <VBox>
                            <children>
                               <Label text="Nome do grupo">

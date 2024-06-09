@@ -17,29 +17,41 @@ import model.Chat;
 public class NewGroupController implements Initializable {
 
   @FXML
-  TextField inputChatId, inputChatName;
+  TextField inputChatName;
   @FXML
   TextArea inputDescription;
 
   @FXML
   private void onCreate() {
-    String chatId = inputChatId.getText().trim();
     String chatName = inputChatName.getText().trim();
     String description = inputDescription.getText().trim();
 
-    if (chatId.equals("") || chatName.equals(""))
+    if (chatName.equals(""))
       return;
 
-    Chat chat = new Chat(chatId, chatName, description);
+    Chat chat = new Chat(chatName, description);
     App.addChat(chat);
-    goToMainScreen();
+    ChatController.chatId = chat.getChatId();
+    goToNewChat();
   }
 
+  @FXML
   private void goToMainScreen() {
     try {
       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/MainScreen.fxml"));
       Parent mainScreen = fxmlLoader.load();
-      Stage stage = (Stage) inputChatId.getScene().getWindow();
+      Stage stage = (Stage) inputChatName.getScene().getWindow();
+      stage.setScene(new Scene(mainScreen));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  private void goToNewChat() {
+    try {
+      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/ChatScreen.fxml"));
+      Parent mainScreen = fxmlLoader.load();
+      Stage stage = (Stage) inputChatName.getScene().getWindow();
       stage.setScene(new Scene(mainScreen));
     } catch (Exception e) {
       e.printStackTrace();
