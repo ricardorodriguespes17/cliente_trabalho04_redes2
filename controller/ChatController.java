@@ -25,6 +25,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 import model.App;
 import model.Chat;
@@ -54,12 +55,10 @@ public class ChatController implements Initializable {
   private boolean menuIsOpen = false;
   private TextField inputSearch;
   private ChangeListener<Boolean> listener;
+  ChangeListener<Boolean> messageSendListener;
 
   @FXML
   private void sendMessage() {
-    if (app.isLoading())
-      return;
-
     String value = inputMessage.getText();
     User user = app.getUser();
 
@@ -68,16 +67,15 @@ public class ChatController implements Initializable {
 
     LocalDateTime currentTime = LocalDateTime.now();
 
-    chat.addMessage(new Message(value.trim(), user.getUserId(), currentTime));
-    inputMessage.setText("");
-
-    listener = (obs, wasLoading, isLoading) -> {
-      if (!isLoading) {
-        renderMessages(null);
-        app.isLoadingProperty().removeListener(listener);
-      }
+    Message message = new Message(value.trim(), user.getUserId(), currentTime);
+    messageSendListener = (obs, wasSend, isSend) -> {
+      message.isSendProperty().removeListener(messageSendListener);
+      renderMessages(null);
     };
-    app.isLoadingProperty().addListener(listener);
+    message.isSendProperty().addListener(messageSendListener);
+    chat.addMessage(message);
+    inputMessage.setText("");
+    renderMessages(null);
   }
 
   @FXML
@@ -233,9 +231,18 @@ public class ChatController implements Initializable {
       parent.getStyleClass().add("selected");
     }
 
+    if (!message.isSend()) {
+      SVGPath svgIconSending = new SVGPath();
+      svgIconSending.setContent(
+          "M 24 4 C 12.972066 4 4 12.972074 4 24 C 4 35.027926 12.972066 44 24 44 C 35.027934 44 44 35.027926 44 24 C 44 12.972074 35.027934 4 24 4 z M 24 7 C 33.406615 7 41 14.593391 41 24 C 41 33.406609 33.406615 41 24 41 C 14.593385 41 7 33.406609 7 24 C 7 14.593391 14.593385 7 24 7 z M 23.476562 11.978516 A 1.50015 1.50015 0 0 0 22 13.5 L 22 25.5 A 1.50015 1.50015 0 0 0 23.5 27 L 31.5 27 A 1.50015 1.50015 0 1 0 31.5 24 L 25 24 L 25 13.5 A 1.50015 1.50015 0 0 0 23.476562 11.978516 z");
+      Button button = new Button();
+      button.setGraphic(svgIconSending);
+      hbox.getChildren().add(button);
+    }
+
     if (userId.equals(user.getUserId())) {
       parent.getStyleClass().add("selfMessageBox");
-      hbox.getChildren().add(messageTimeLabel);
+      hbox.getChildren().add(0, messageTimeLabel);
     } else if (userId.equals("server")) {
       parent.getStyleClass().add("serverMessageBox");
     } else {
@@ -265,8 +272,7 @@ public class ChatController implements Initializable {
       boolean selected = searchedMessages != null
           && searchedMessages.size() > 0
           && searchedMessages.contains(message);
-      HBox hbox = createMessageBox(new Message(message.getText(), message.getUserId(), message.getDateTime()),
-          selected);
+      HBox hbox = createMessageBox(message, selected);
 
       if (selected)
         boxSearcheds[0] = hbox;

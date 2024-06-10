@@ -33,7 +33,7 @@
    <bottom>
       <HBox prefHeight="100.0" prefWidth="200.0" styleClass="footer" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#onCreate" styleClass="buttonNewGroup" text="Criar" />
+            <Button fx:id="buttonCreate" mnemonicParsing="false" onAction="#onCreate" styleClass="buttonNewGroup" text="Criar" />
          </children>
       </HBox>
    </bottom>

@@ -66,19 +66,20 @@ public class App {
     // }).start();
   }
 
-  public void send(Chat chat, User user, String message) {
+  public void send(Chat chat, User user, Message message) {
     System.out.println("> Enviando send para o server");
-    setLoading(true);
 
     new Thread(() -> {
       try {
         Thread.sleep(5000);
         System.out.println("> Send enviado com sucesso");
       } catch (InterruptedException e) {
-        e.printStackTrace();
+        Platform.runLater(() -> {
+          chat.getMessageByDateTime(message.getDateTime()).setError(true);
+        });
       } finally {
         Platform.runLater(() -> {
-          setLoading(false);
+          chat.getMessageByDateTime(message.getDateTime()).setSend(true);
         });
       }
     }).start();

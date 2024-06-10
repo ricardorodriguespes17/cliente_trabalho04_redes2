@@ -4,17 +4,23 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 public class Message implements Comparable<Message> {
   private String text;
   private String userId;
   private LocalDateTime dateTime;
   private boolean read;
+  private BooleanProperty send;
+  private BooleanProperty error;
 
   public Message(String text, String userId, LocalDateTime dateTime) {
     this.text = text;
     this.userId = userId;
     this.dateTime = dateTime;
     this.read = false;
+    send = new SimpleBooleanProperty(false);
   }
 
   public String getText() {
@@ -76,6 +82,30 @@ public class Message implements Comparable<Message> {
 
   public void setRead(boolean read) {
     this.read = read;
+  }
+
+  public BooleanProperty isSendProperty() {
+    return send;
+  }
+
+  public boolean isSend() {
+    return send.get();
+  }
+
+  public void setSend(boolean send) {
+    this.send.set(send);
+  }
+
+  public BooleanProperty isErrorProperty() {
+    return error;
+  }
+
+  public boolean isError() {
+    return error.get();
+  }
+
+  public void setError(boolean error) {
+    this.error.set(error);
   }
 
   @Override

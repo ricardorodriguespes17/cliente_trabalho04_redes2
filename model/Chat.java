@@ -1,6 +1,7 @@
 package model;
 
 import java.security.SecureRandom;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -71,6 +72,16 @@ public class Chat implements Comparable<Chat> {
     return messages;
   }
 
+  public Message getMessageByDateTime(LocalDateTime time) {
+    for (Message message : messages) {
+      if (message.getDateTime().equals(time)) {
+        return message;
+      }
+    }
+
+    return null;
+  }
+
   public Message getLastMessage() {
     if (messages.size() == 0) {
       return null;
@@ -106,7 +117,7 @@ public class Chat implements Comparable<Chat> {
   public void addMessage(Message message) {
     messages.add(message);
     Collections.sort(messages);
-    app.send(this, app.getUser(), message.getText());
+    app.send(this, app.getUser(), message);
   }
 
   public void setMessages(List<Message> messages) {

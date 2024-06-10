@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -21,6 +22,8 @@ public class NewGroupController implements Initializable {
   TextField inputChatName;
   @FXML
   TextArea inputDescription;
+  @FXML
+  Button buttonCreate;
 
   private App app;
   private ChangeListener<Boolean> listener;
@@ -40,6 +43,11 @@ public class NewGroupController implements Initializable {
     ChatController.chatId = chat.getChatId();
     app.addChat(chat);
 
+    buttonCreate.setText("Criando...");
+    buttonCreate.setDisable(true);
+    inputChatName.setDisable(true);
+    inputDescription.setDisable(true);
+
     listener = (obs, wasLoading, isLoading) -> {
       if (!isLoading) {
         app.isLoadingProperty().removeListener(listener);
@@ -52,6 +60,9 @@ public class NewGroupController implements Initializable {
 
   @FXML
   private void goToMainScreen() {
+    if (app.isLoading())
+      return;
+
     try {
       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/MainScreen.fxml"));
       Parent mainScreen = fxmlLoader.load();
