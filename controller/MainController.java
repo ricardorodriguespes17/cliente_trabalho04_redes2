@@ -64,7 +64,7 @@ public class MainController implements Initializable {
   }
 
   @FXML
-  private void openSearhBox() {
+  private void openSearchBox() {
     inputSearch = new TextField();
     HBox.setHgrow(inputSearch, Priority.ALWAYS);
     HBox.setHgrow(regionSepator, Priority.NEVER);
@@ -86,7 +86,7 @@ public class MainController implements Initializable {
   private void onSearch() {
     String text = inputSearch.getText();
 
-    if (text.trim() == "") {
+    if (text.trim().equals("")) {
       renderChats(null);
       return;
     }
@@ -101,7 +101,7 @@ public class MainController implements Initializable {
     headerBox.getChildren().remove(0);
     headerBox.getChildren().add(0, title);
     buttonSearch.setOnAction(event -> {
-      openSearhBox();
+      openSearchBox();
     });
   }
 

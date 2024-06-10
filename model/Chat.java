@@ -1,7 +1,6 @@
 package model;
 
 import java.security.SecureRandom;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,8 +24,6 @@ public class Chat {
     this.chatId = generateRandomString(5);
     this.chatName = chatName;
     messages = new ArrayList<>();
-    LocalDateTime currentDateTime = LocalDateTime.now();
-    messages.add(new Message("Início do chat", "server", currentDateTime));
     if (description == null || description.equals("")) {
       this.description = null;
     }
@@ -57,6 +54,18 @@ public class Chat {
 
   public void setChatName(String chatName) {
     this.chatName = chatName;
+  }
+
+  public List<Message> getMessagesByText(String text) {
+    List<Message> messages = new ArrayList<>();
+
+    for (Message message : this.messages) {
+      if (message.getText().toLowerCase().contains(text.toLowerCase())) {
+        messages.add(message);
+      }
+    }
+
+    return messages;
   }
 
   public Message getLastMessage() {

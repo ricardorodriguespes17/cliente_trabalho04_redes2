@@ -42,3 +42,56 @@ ScrollPane .scroll-bar {
 ScrollPane .scroll-bar .thumb {
   -fx-background-color: -fx-border;
 }
+
+.alert .header-panel {
+  -fx-background-color: -fx-background;
+}
+
+.alert .header-panel Label {
+  -fx-font-size: 24;
+}
+
+.alert .content.label {
+  -fx-text-fill: -fx-text;
+  -fx-font-size: 18;
+  -fx-padding: 15 10 12 10;
+}
+
+.alert .button {
+  -fx-background-color: -fx-primary-color;
+  -fx-text-fill: -fx-text;
+  -fx-pref-height: 30;
+  -fx-font-size: 14;
+}
+
+.alert .button:default-button {
+  -fx-background-color: -fx-border;
+}
+
+.context-menu {
+  -fx-background-color: -fx-background;
+  -fx-border-color: -fx-border;
+  -fx-border-width: 1;
+  -fx-border-radius: 5;
+  -fx-background-radius: 5;
+}
+
+.context-menu .menu-item {
+  -fx-background-color: transparent;
+  -fx-text-fill: -fx-text;
+  -fx-padding: 10 20;
+  -fx-font-size: 14;
+  -fx-cursor: hand;
+}
+
+.context-menu .menu-item:hover {
+  -fx-background-color: -fx-border;
+}
+
+.context-menu .menu-item:selected {
+  -fx-background-color: -fx-border;
+}
+
+.context-menu .menu-item:focused {
+  -fx-background-color: -fx-border;
+}
