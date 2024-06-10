@@ -1,8 +1,8 @@
 /* ***************************************************************
 * Autor............: Ricardo Rodrigues Neto
 * Matricula........: 201710560
-* Inicio...........: 04/06/2024
-* Ultima alteracao.: 06/06/2024
+* Inicio...........: 07/06/2024
+* Ultima alteracao.: 10/06/2024
 * Nome.............: Controller
 * Funcao...........: Controla a tela principal da aplicação.
 *************************************************************** */
@@ -12,9 +12,7 @@ package controller;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import javafx.animation.FadeTransition;
-import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -22,7 +20,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -36,6 +33,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 
 public class MainController implements Initializable {
@@ -52,9 +50,7 @@ public class MainController implements Initializable {
   VBox mainBox;
 
   private App app;
-  private ProgressIndicator loadingIndicator;
-  TextField inputSearch;
-  private ChangeListener<Boolean> listener;
+  private TextField inputSearch;
 
   @FXML
   private void goToCreateGroup() {
@@ -184,6 +180,11 @@ public class MainController implements Initializable {
     }
 
     mainBox.getChildren().clear();
+
+    if (chats.size() == 0) {
+      renderEmptyChats();
+    }
+
     for (Chat chat : chats) {
       Message lastMessage = chat.getLastMessage();
       int unreadsCount = chat.getNumberOfMessagesUnread(app.getUser().getUserId());
@@ -212,38 +213,27 @@ public class MainController implements Initializable {
     }
   }
 
-  private void createLoadingIndicator() {
-    loadingIndicator = new ProgressIndicator();
-    mainBox.getChildren().add(loadingIndicator);
-  }
+  private void renderEmptyChats() {
+    Label label1 = new Label("Está vazio por aqui");
+    Label label2 = new Label("Crie ou entre em um grupo");
+    SVGPath svgIcon = new SVGPath();
 
-  private void initApp() {
-    app = App.getInstance();
-    if (app.getUser() == null) {
-      User user = new User("ricardo", "Ricardo");
-      app.setUser(user);
-      app.addUser(user);
+    svgIcon.setContent(
+        "M3 11v8h.051c.245 1.692 1.69 3 3.449 3 1.174 0 2.074-.417 2.672-1.174a3.99 3.99 0 0 0 5.668-.014c.601.762 1.504 1.188 2.66 1.188 1.93 0 3.5-1.57 3.5-3.5V11c0-4.962-4.037-9-9-9s-9 4.038-9 9zm6 1c-1.103 0-2-.897-2-2s.897-2 2-2 2 .897 2 2-.897 2-2 2zm6-4c1.103 0 2 .897 2 2s-.897 2-2 2-2-.897-2-2 .897-2 2-2z");
+    svgIcon.setScaleX(4);
+    svgIcon.setScaleY(4);
+    VBox vbox = new VBox(label1, svgIcon, label2);
+    label1.getStyleClass().add("title");
+    vbox.getStyleClass().add("emptyBox");
 
-      listener = (obs, wasLoading, isLoading) -> {
-        if (!isLoading) {
-          app.isLoadingProperty().removeListener(listener);
-          renderChats(null);
-        }
-      };
-
-      app.isLoadingProperty().addListener(listener);
-    } else {
-      renderChats(null);
-    }
+    mainBox.getChildren().add(vbox);
   }
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    mainBox.getChildren().clear();
     scrollMainBox.setFitToWidth(true);
-    createLoadingIndicator();
-
-    initApp();
+    app = App.getInstance();
+    renderChats(null);
   }
 
 }

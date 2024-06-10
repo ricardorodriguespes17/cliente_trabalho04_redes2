@@ -1,0 +1,9 @@
+.loadingBox {
+  -fx-alignment: center;
+  -fx-pref-height: 100;
+  -fx-padding: 15;
+}
+
+.loadingBox .progressIndicator {
+  -fx-progress-color: -fx-primary-color;
+}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="root" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SplashController">
+   <stylesheets>
+      <URL value="@css/common.css" />
+      <URL value="@css/dark.css" />
+      <URL value="@css/splash.css" />
+   </stylesheets>
+   <center>
+      <VBox fx:id="mainBox" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

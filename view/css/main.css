@@ -20,8 +20,25 @@
   -fx-alignment: center;
 }
 
+.emptyBox {
+  -fx-alignment: center;
+  -fx-padding: 20;
+  -fx-spacing: 50;
+}
+
+.emptyBox .title {
+  -fx-font-size: 18;
+}
+
+.emptyBox > SVGPath {
+  -fx-padding: 10;
+  -fx-fill: -fx-text;
+}
+
 .main {
   -fx-alignment: top_center;
+  -fx-pref-height: 0;
+  -fx-max-height: 0;
 }
 
 .main > HBox {

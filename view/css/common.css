@@ -1,5 +1,7 @@
-BorderPane {
+.root {
   -fx-background-color: -fx-background;
+  -fx-pref-height: 600;
+  -fx-pref-width: 500;
 }
 
 Button {

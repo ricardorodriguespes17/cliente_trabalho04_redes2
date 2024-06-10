@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 public class Principal extends Application {
   @Override
   public void start(Stage stage) throws Exception {
-    Parent root = FXMLLoader.load(getClass().getResource("view/MainScreen.fxml"));
+    Parent root = FXMLLoader.load(getClass().getResource("view/SplashScreen.fxml"));
     Scene scene = new Scene(root);
     stage.setScene(scene);
     stage.getIcons().add(new Image("view/img/logo.png"));
