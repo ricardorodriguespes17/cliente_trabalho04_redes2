@@ -45,6 +45,11 @@ ScrollPane .scroll-bar .thumb {
   -fx-background-color: -fx-border;
 }
 
+.alert {
+  -fx-pref-height: auto;
+  -fx-pref-width: 400;
+}
+
 .alert .header-panel {
   -fx-background-color: -fx-background;
 }
