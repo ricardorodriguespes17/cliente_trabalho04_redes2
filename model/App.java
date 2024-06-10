@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class App {
@@ -29,15 +30,18 @@ public class App {
       }
     }
 
+    Collections.sort(result);
     return result;
   }
 
   public static List<Chat> getChats() {
+    Collections.sort(chats);
     return chats;
   }
 
   public static void addChat(Chat chat) {
     chats.add(chat);
+    Collections.sort(chats);
   }
 
   public static void removeChat(Chat chat) {

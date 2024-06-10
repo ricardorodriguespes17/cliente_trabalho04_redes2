@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class Chat {
+public class Chat implements Comparable<Chat> {
   private String chatId;
   private String chatName;
   private String description;
@@ -69,6 +69,10 @@ public class Chat {
   }
 
   public Message getLastMessage() {
+    if (messages.size() == 0) {
+      return null;
+    }
+
     Message message = messages.get(messages.size() - 1);
 
     if (message.getUserId().equals("server")) {
@@ -112,6 +116,15 @@ public class Chat {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  @Override
+  public int compareTo(Chat other) {
+    if (this.getLastMessage() == null || other.getLastMessage() == null) {
+      return 0;
+    }
+
+    return other.getLastMessage().getDateTime().compareTo(this.getLastMessage().getDateTime());
   }
 
 }
