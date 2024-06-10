@@ -1,5 +1,7 @@
 package model;
 
+import java.io.IOException;
+import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,32 +40,19 @@ public class App {
 
     new Thread(() -> {
       try {
-        Thread.sleep(5000);
-        System.out.println("> Server iniciado");
-      } catch (InterruptedException e) {
-        e.printStackTrace();
+        tcpClient.connect();
+        tcpClient.receive();
+      } catch (UnknownHostException e) {
+        System.out.println("> Erro: Houve um problema ao encontrar o servidor");
+      } catch (IOException e) {
+        System.out.println("> Erro: Houve um problema ao conectar o servidor");
       } finally {
         Platform.runLater(() -> {
+          System.out.println("> Server iniciado");
           setLoading(false);
         });
       }
     }).start();
-
-    // new Thread(() -> {
-    // try {
-    // tcpClient.connect();
-    // tcpClient.receive();
-    // } catch (UnknownHostException e) {
-    // System.out.println("> Erro: Houve um problema ao encontrar o servidor");
-    // } catch (IOException e) {
-    // System.out.println("> Erro: Houve um problema ao conectar o servidor");
-    // } finally {
-    // Platform.runLater(() -> {
-    // System.out.println("> Server iniciado");
-    // setLoading(false);
-    // });
-    // }
-    // }).start();
   }
 
   public void send(Chat chat, User user, Message message) {
@@ -71,9 +60,9 @@ public class App {
 
     new Thread(() -> {
       try {
-        Thread.sleep(5000);
-        System.out.println("> Send enviado com sucesso");
-      } catch (InterruptedException e) {
+        tcpClient.send(chat.getChatId(), user.getName(), message.getText());
+      } catch (IOException e) {
+        System.out.println("> Erro: Falha ao enviar um send para servidor");
         Platform.runLater(() -> {
           chat.getMessageByDateTime(message.getDateTime()).setError(true);
         });
@@ -83,14 +72,6 @@ public class App {
         });
       }
     }).start();
-
-    // new Thread(() -> {
-    // try {
-    // tcpClient.send(chat.getChatId(), user.getName(), message);
-    // } catch (IOException e) {
-    // System.out.println("> Erro: Falha ao enviar um send para servidor");
-    // }
-    // }).start();
   }
 
   public void join(Chat chat, User user) {
@@ -99,24 +80,16 @@ public class App {
 
     new Thread(() -> {
       try {
-        Thread.sleep(5000);
-        System.out.println("> Join enviado com sucesso");
-      } catch (InterruptedException e) {
-        e.printStackTrace();
+        tcpClient.join(chat.getChatId(), user.getName());
+      } catch (IOException e) {
+        System.out.println("> Erro: Falha ao enviar um join para servidor");
       } finally {
+        System.out.println("> Join enviado com sucesso");
         Platform.runLater(() -> {
           setLoading(false);
         });
       }
     }).start();
-
-    // new Thread(() -> {
-    // try {
-    // tcpClient.join(chat.getChatId(), user.getName());
-    // } catch (IOException e) {
-    // System.out.println("> Erro: Falha ao enviar um join para servidor");
-    // }
-    // }).start();
   }
 
   public void leave(Chat chat, User user) {
@@ -125,24 +98,16 @@ public class App {
 
     new Thread(() -> {
       try {
-        Thread.sleep(5000);
-        System.out.println("> Leave enviado com sucesso");
-      } catch (InterruptedException e) {
+        tcpClient.leave(chat.getChatId(), user.getName());
+      } catch (IOException e) {
         e.printStackTrace();
       } finally {
+        System.out.println("> Leave enviado com sucesso");
         Platform.runLater(() -> {
           setLoading(false);
         });
       }
     }).start();
-
-    // new Thread(() -> {
-    // try {
-    // tcpClient.leave(chat.getChatId(), user.getName());
-    // } catch (IOException e) {
-    // System.out.println("> Erro: Falha ao enviar um leave para o servidor");
-    // }
-    // }).start();
   }
 
   public void createRandonsChats() {
