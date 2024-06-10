@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.animation.FadeTransition;
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,6 +22,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -49,7 +51,10 @@ public class MainController implements Initializable {
   @FXML
   VBox mainBox;
 
+  private App app;
+  private ProgressIndicator loadingIndicator;
   TextField inputSearch;
+  private ChangeListener<Boolean> listener;
 
   @FXML
   private void goToCreateGroup() {
@@ -91,7 +96,7 @@ public class MainController implements Initializable {
       return;
     }
 
-    renderChats(App.getChatsByText(text));
+    renderChats(app.getChatsByText(text));
   }
 
   private void escapeSearch() {
@@ -175,21 +180,21 @@ public class MainController implements Initializable {
     List<Chat> chats = listChat;
 
     if (listChat == null) {
-      chats = App.getChats();
+      chats = app.getChats();
     }
 
     mainBox.getChildren().clear();
     for (Chat chat : chats) {
       Message lastMessage = chat.getLastMessage();
-      int unreadsCount = chat.getNumberOfMessagesUnread();
+      int unreadsCount = chat.getNumberOfMessagesUnread(app.getUser().getUserId());
       String userName = "";
       String messageTime = "";
       String textLastMessage = "";
-      User user = App.getUser();
+      User user = app.getUser();
 
       if (lastMessage != null) {
         messageTime = lastMessage.getDateToChat();
-        User messageUser = App.getUserById(lastMessage.getUserId());
+        User messageUser = app.getUserById(lastMessage.getUserId());
 
         if (messageUser != null) {
           userName = messageUser.getName();
@@ -207,10 +212,38 @@ public class MainController implements Initializable {
     }
   }
 
+  private void createLoadingIndicator() {
+    loadingIndicator = new ProgressIndicator();
+    mainBox.getChildren().add(loadingIndicator);
+  }
+
+  private void initApp() {
+    app = App.getInstance();
+    if (app.getUser() == null) {
+      User user = new User("ricardo", "Ricardo");
+      app.setUser(user);
+      app.addUser(user);
+
+      listener = (obs, wasLoading, isLoading) -> {
+        if (!isLoading) {
+          app.isLoadingProperty().removeListener(listener);
+          renderChats(null);
+        }
+      };
+
+      app.isLoadingProperty().addListener(listener);
+    } else {
+      renderChats(null);
+    }
+  }
+
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+    mainBox.getChildren().clear();
     scrollMainBox.setFitToWidth(true);
-    renderChats(null);
+    createLoadingIndicator();
+
+    initApp();
   }
 
 }

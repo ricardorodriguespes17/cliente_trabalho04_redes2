@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -47,15 +48,20 @@ public class ChatController implements Initializable {
   @FXML
   HBox headerBox;
 
+  private App app;
   public static String chatId = null;
   private Chat chat;
   private boolean menuIsOpen = false;
   private TextField inputSearch;
+  private ChangeListener<Boolean> listener;
 
   @FXML
   private void sendMessage() {
+    if (app.isLoading())
+      return;
+
     String value = inputMessage.getText();
-    User user = App.getUser();
+    User user = app.getUser();
 
     if (value.trim().equals(""))
       return;
@@ -64,7 +70,14 @@ public class ChatController implements Initializable {
 
     chat.addMessage(new Message(value.trim(), user.getUserId(), currentTime));
     inputMessage.setText("");
-    renderMessages(null);
+
+    listener = (obs, wasLoading, isLoading) -> {
+      if (!isLoading) {
+        renderMessages(null);
+        app.isLoadingProperty().removeListener(listener);
+      }
+    };
+    app.isLoadingProperty().addListener(listener);
   }
 
   @FXML
@@ -131,8 +144,18 @@ public class ChatController implements Initializable {
   }
 
   private void onLeaveGroup() {
-    App.removeChat(chat);
-    goToMainScreen();
+    if (app.isLoading())
+      return;
+
+    app.removeChat(chat);
+
+    listener = (obs, wasLoading, isLoading) -> {
+      if (!isLoading) {
+        goToMainScreen();
+        app.isLoadingProperty().removeListener(listener);
+      }
+    };
+    app.isLoadingProperty().addListener(listener);
   }
 
   private void onSeeDetails() {
@@ -201,7 +224,7 @@ public class ChatController implements Initializable {
     Label messageLabel = new Label(message.getText());
     Label messageTimeLabel = new Label(message.getTime());
     String userId = message.getUserId();
-    User user = App.getUser();
+    User user = app.getUser();
 
     messageTimeLabel.getStyleClass().add("messageTime");
     hbox.getStyleClass().add("messageTextBox");
@@ -216,7 +239,7 @@ public class ChatController implements Initializable {
     } else if (userId.equals("server")) {
       parent.getStyleClass().add("serverMessageBox");
     } else {
-      User messageUser = App.getUserById(userId);
+      User messageUser = app.getUserById(userId);
       parent.getStyleClass().add("otherMessageBox");
       Label userNameLabel = new Label(messageUser.getName());
       userNameLabel.getStyleClass().add("messageUserName");
@@ -268,7 +291,8 @@ public class ChatController implements Initializable {
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     scrollMainBox.setFitToWidth(true);
-    chat = App.getChatById(chatId);
+    app = App.getInstance();
+    chat = app.getChatById(chatId);
     chatNameLabel.setText(chat.getChatName());
     renderMessages(null);
   }

@@ -3,6 +3,7 @@ package controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,8 +22,14 @@ public class NewGroupController implements Initializable {
   @FXML
   TextArea inputDescription;
 
+  private App app;
+  private ChangeListener<Boolean> listener;
+
   @FXML
   private void onCreate() {
+    if (app.isLoading())
+      return;
+
     String chatName = inputChatName.getText().trim();
     String description = inputDescription.getText().trim();
 
@@ -30,9 +37,17 @@ public class NewGroupController implements Initializable {
       return;
 
     Chat chat = new Chat(chatName, description);
-    App.addChat(chat);
     ChatController.chatId = chat.getChatId();
-    goToNewChat();
+    app.addChat(chat);
+
+    listener = (obs, wasLoading, isLoading) -> {
+      if (!isLoading) {
+        app.isLoadingProperty().removeListener(listener);
+        goToNewChat();
+      }
+    };
+
+    app.isLoadingProperty().addListener(listener);
   }
 
   @FXML
@@ -60,7 +75,7 @@ public class NewGroupController implements Initializable {
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-
+    app = App.getInstance();
   }
 
 }

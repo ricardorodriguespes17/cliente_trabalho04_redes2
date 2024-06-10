@@ -31,17 +31,17 @@ public class TCPClient extends Client {
   }
 
   @Override
-  public void join() {
+  public void join(String groupId, String user) {
     throw new UnsupportedOperationException("Unimplemented method 'join'");
   }
 
   @Override
-  public void leave() {
+  public void leave(String groupId, String user) {
     throw new UnsupportedOperationException("Unimplemented method 'leave'");
   }
 
   @Override
-  public void receive() throws ClassNotFoundException, IOException {
+  public void receive() throws IOException {
     new Thread(() -> {
       try {
         input = new ObjectInputStream(socket.getInputStream());

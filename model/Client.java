@@ -16,11 +16,11 @@ public abstract class Client {
 
   public abstract void send(String groupId, String user, String data) throws IOException;
 
-  public abstract void join();
+  public abstract void join(String grupoId, String user) throws IOException;
 
-  public abstract void leave();
+  public abstract void leave(String grupoId, String user) throws IOException;
 
-  public abstract void receive() throws ClassNotFoundException, IOException;
+  public abstract void receive() throws IOException;
 
   public static Client createClient(String type, String serverAddress, int serverPort) {
     if (type.equals("TCP")) {

@@ -1,15 +1,169 @@
 package model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class App {
-  private static User user = null;
-  private static List<Chat> chats = new ArrayList<>();
-  private static List<User> users = new ArrayList<>();
+import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 
-  public static Chat getChatById(String chatId) {
+public class App {
+  private static App instance;
+  private User user = null;
+  private List<Chat> chats;
+  private List<User> users;
+  private Client tcpClient;
+  private BooleanProperty isLoading;
+
+  public App() {
+    isLoading = new SimpleBooleanProperty(false);
+    chats = new ArrayList<>();
+    users = new ArrayList<>();
+    tcpClient = Client.createClient("TCP", "192.168.1.11", 6789);
+    startClient();
+  }
+
+  public static App getInstance() {
+    if (instance == null) {
+      instance = new App();
+    }
+    return instance;
+  }
+
+  public void startClient() {
+    System.out.println("> Iniciando server");
+    setLoading(true);
+
+    new Thread(() -> {
+      try {
+        Thread.sleep(5000);
+        System.out.println("> Server iniciado");
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      } finally {
+        Platform.runLater(() -> {
+          setLoading(false);
+        });
+      }
+    }).start();
+
+    // new Thread(() -> {
+    // try {
+    // tcpClient.connect();
+    // tcpClient.receive();
+    // } catch (UnknownHostException e) {
+    // System.out.println("> Erro: Houve um problema ao encontrar o servidor");
+    // } catch (IOException e) {
+    // System.out.println("> Erro: Houve um problema ao conectar o servidor");
+    // } finally {
+    // Platform.runLater(() -> {
+    // System.out.println("> Server iniciado");
+    // setLoading(false);
+    // });
+    // }
+    // }).start();
+  }
+
+  public void send(Chat chat, User user, String message) {
+    System.out.println("> Enviando send para o server");
+    setLoading(true);
+
+    new Thread(() -> {
+      try {
+        Thread.sleep(5000);
+        System.out.println("> Send enviado com sucesso");
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      } finally {
+        Platform.runLater(() -> {
+          setLoading(false);
+        });
+      }
+    }).start();
+
+    // new Thread(() -> {
+    // try {
+    // tcpClient.send(chat.getChatId(), user.getName(), message);
+    // } catch (IOException e) {
+    // System.out.println("> Erro: Falha ao enviar um send para servidor");
+    // }
+    // }).start();
+  }
+
+  public void join(Chat chat, User user) {
+    System.out.println("> Enviando join para o server");
+    setLoading(true);
+
+    new Thread(() -> {
+      try {
+        Thread.sleep(5000);
+        System.out.println("> Join enviado com sucesso");
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      } finally {
+        Platform.runLater(() -> {
+          setLoading(false);
+        });
+      }
+    }).start();
+
+    // new Thread(() -> {
+    // try {
+    // tcpClient.join(chat.getChatId(), user.getName());
+    // } catch (IOException e) {
+    // System.out.println("> Erro: Falha ao enviar um join para servidor");
+    // }
+    // }).start();
+  }
+
+  public void leave(Chat chat, User user) {
+    System.out.println("> Enviando leave para o server");
+    setLoading(true);
+
+    new Thread(() -> {
+      try {
+        Thread.sleep(5000);
+        System.out.println("> Leave enviado com sucesso");
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      } finally {
+        Platform.runLater(() -> {
+          setLoading(false);
+        });
+      }
+    }).start();
+
+    // new Thread(() -> {
+    // try {
+    // tcpClient.leave(chat.getChatId(), user.getName());
+    // } catch (IOException e) {
+    // System.out.println("> Erro: Falha ao enviar um leave para o servidor");
+    // }
+    // }).start();
+  }
+
+  public void createRandonsChats() {
+    Chat chatRedes = new Chat("Redes II", "Grupo da matéria de Redes II 2024.1");
+
+    User user = new User("10", "Ricardo");
+    User user2 = new User("11", "Marlos");
+
+    LocalDateTime today = LocalDateTime.now();
+    LocalDateTime dateTime = today.minusDays(0);
+    Message message = new Message("Olá mundo", user2.getUserId(), dateTime);
+
+    chatRedes.addMessage(message);
+    this.addUser(user);
+    this.addUser(user2);
+    this.setUser(user);
+    this.addChat(chatRedes);
+  }
+
+  // Gets e Sets
+
+  public Chat getChatById(String chatId) {
     for (Chat chat : chats) {
       if (chat.getChatId().equals(chatId)) {
         return chat;
@@ -19,7 +173,7 @@ public class App {
     return null;
   }
 
-  public static List<Chat> getChatsByText(String text) {
+  public List<Chat> getChatsByText(String text) {
     List<Chat> result = new ArrayList<>();
 
     for (Chat chat : chats) {
@@ -34,21 +188,23 @@ public class App {
     return result;
   }
 
-  public static List<Chat> getChats() {
+  public List<Chat> getChats() {
     Collections.sort(chats);
     return chats;
   }
 
-  public static void addChat(Chat chat) {
+  public void addChat(Chat chat) {
     chats.add(chat);
     Collections.sort(chats);
+    this.join(chat, user);
   }
 
-  public static void removeChat(Chat chat) {
+  public void removeChat(Chat chat) {
     chats.remove(chat);
+    this.leave(chat, user);
   }
 
-  public static User getUserById(String userId) {
+  public User getUserById(String userId) {
     for (User user : users) {
       if (user.getUserId().equals(userId)) {
         return user;
@@ -58,31 +214,52 @@ public class App {
     return null;
   }
 
-  public static List<User> getUsers() {
+  public List<User> getUsers() {
     return users;
   }
 
-  public static void addUser(User user) {
+  public void addUser(User user) {
     users.add(user);
   }
 
-  public static void removeUser(User user) {
+  public void removeUser(User user) {
     users.remove(user);
   }
 
-  public static User getUser() {
+  public User getUser() {
     return user;
   }
 
-  public static void setUser(User user) {
-    App.user = user;
+  public void setUser(User user) {
+    this.user = user;
   }
 
-  public static void setChats(List<Chat> chats) {
-    App.chats = chats;
+  public void setChats(List<Chat> chats) {
+    this.chats = chats;
   }
 
-  public static void setUsers(List<User> users) {
-    App.users = users;
+  public void setUsers(List<User> users) {
+    this.users = users;
   }
+
+  public Client getTcpClient() {
+    return tcpClient;
+  }
+
+  public void setTcpClient(Client tcpClient) {
+    this.tcpClient = tcpClient;
+  }
+
+  public BooleanProperty isLoadingProperty() {
+    return isLoading;
+  }
+
+  public boolean isLoading() {
+    return isLoading.get();
+  }
+
+  public void setLoading(boolean isLoading) {
+    this.isLoading.set(isLoading);
+  }
+
 }

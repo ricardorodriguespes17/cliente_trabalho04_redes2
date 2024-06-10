@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Chat implements Comparable<Chat> {
+  private App app;
   private String chatId;
   private String chatName;
   private String description;
@@ -18,6 +19,7 @@ public class Chat implements Comparable<Chat> {
     this.chatId = generateRandomString(5);
     this.chatName = chatName;
     messages = new ArrayList<>();
+    app = App.getInstance();
   }
 
   public Chat(String chatName, String description) {
@@ -27,6 +29,7 @@ public class Chat implements Comparable<Chat> {
     if (description == null || description.equals("")) {
       this.description = null;
     }
+    app = App.getInstance();
   }
 
   public static String generateRandomString(int length) {
@@ -82,12 +85,12 @@ public class Chat implements Comparable<Chat> {
     return message;
   }
 
-  public int getNumberOfMessagesUnread() {
+  public int getNumberOfMessagesUnread(String userId) {
     int count = 0;
 
     for (Message message : messages) {
       boolean notIsServer = !message.getUserId().equals("server");
-      boolean notIsSelf = !message.getUserId().equals(App.getUser().getUserId());
+      boolean notIsSelf = !message.getUserId().equals(userId);
       if (!message.isRead() && notIsServer && notIsSelf) {
         count++;
       }
@@ -103,6 +106,7 @@ public class Chat implements Comparable<Chat> {
   public void addMessage(Message message) {
     messages.add(message);
     Collections.sort(messages);
+    app.send(this, app.getUser(), message.getText());
   }
 
   public void setMessages(List<Message> messages) {
