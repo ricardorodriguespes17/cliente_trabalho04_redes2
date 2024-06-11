@@ -1,20 +1,20 @@
 package model;
 
 public class User {
-  private String userId;
+  private String userIp;
   private String name;
 
-  public User(String userId, String name) {
-    this.userId = userId;
+  public User(String userIp, String name) {
+    this.userIp = userIp;
     this.name = name;
   }
 
-  public String getUserId() {
-    return userId;
+  public String getUserIp() {
+    return userIp;
   }
 
-  public void setUserId(String userId) {
-    this.userId = userId;
+  public void setUserIp(String userIp) {
+    this.userIp = userIp;
   }
 
   public String getName() {

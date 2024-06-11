@@ -199,7 +199,7 @@ public class MainController implements Initializable {
 
     for (Chat chat : chats) {
       Message lastMessage = chat.getLastMessage();
-      int unreadsCount = chat.getNumberOfMessagesUnread(app.getUser().getUserId());
+      int unreadsCount = chat.getNumberOfMessagesUnread(app.getUser().getUserIp());
       String userName = "";
       String messageTime = "";
       String textLastMessage = "";
@@ -207,13 +207,13 @@ public class MainController implements Initializable {
 
       if (lastMessage != null) {
         messageTime = lastMessage.getDateToChat();
-        User messageUser = app.getUserById(lastMessage.getUserId());
+        User messageUser = app.getUserByIp(lastMessage.getUserIp());
 
         if (messageUser != null) {
           userName = messageUser.getName();
         }
 
-        if (lastMessage.getUserId().equals(user.getUserId())) {
+        if (lastMessage.getUserIp().equals(user.getUserIp())) {
           userName = "Você";
         }
 

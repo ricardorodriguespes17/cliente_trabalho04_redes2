@@ -104,7 +104,7 @@ public class Chat implements Comparable<Chat> {
 
     Message message = messages.get(messages.size() - 1);
 
-    if (message.getUserId().equals("server")) {
+    if (message.getUserIp().equals(App.SERVER_IP)) {
       return null;
     }
 
@@ -115,8 +115,8 @@ public class Chat implements Comparable<Chat> {
     int count = 0;
 
     for (Message message : messages) {
-      boolean notIsServer = !message.getUserId().equals("server");
-      boolean notIsSelf = !message.getUserId().equals(userId);
+      boolean notIsServer = !message.getUserIp().equals(App.SERVER_IP);
+      boolean notIsSelf = !message.getUserIp().equals(userId);
       if (!message.isRead() && notIsServer && notIsSelf) {
         count++;
       }

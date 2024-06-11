@@ -9,15 +9,15 @@ import javafx.beans.property.SimpleBooleanProperty;
 
 public class Message implements Comparable<Message> {
   private String text;
-  private String userId;
+  private String userIp;
   private LocalDateTime dateTime;
   private boolean read;
   private BooleanProperty send;
   private BooleanProperty error;
 
-  public Message(String text, String userId, LocalDateTime dateTime) {
+  public Message(String text, String userIp, LocalDateTime dateTime) {
     this.text = text;
-    this.userId = userId;
+    this.userIp = userIp;
     this.dateTime = dateTime;
     this.read = false;
     send = new SimpleBooleanProperty(false);
@@ -31,12 +31,12 @@ public class Message implements Comparable<Message> {
     this.text = text;
   }
 
-  public String getUserId() {
-    return userId;
+  public String getUserIp() {
+    return userIp;
   }
 
-  public void setUserId(String userId) {
-    this.userId = userId;
+  public void setUserIp(String userIp) {
+    this.userIp = userIp;
   }
 
   public LocalDateTime getDateTime() {

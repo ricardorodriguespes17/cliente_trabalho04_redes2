@@ -2,7 +2,6 @@ package model;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,6 +12,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 
 public class App {
   private static App instance;
+  public static String SERVER_IP = "192.168.1.11";
   private User user = null;
   private List<Chat> chats;
   private List<User> users;
@@ -25,8 +25,7 @@ public class App {
     error = null;
     chats = new ArrayList<>();
     users = new ArrayList<>();
-    users.add(new User("server", "Servidor"));
-    tcpClient = Client.createClient(this, "TCP", "192.168.1.11", 6789);
+    tcpClient = Client.createClient(this, "TCP", SERVER_IP, 6789);
     startClient();
   }
 
@@ -122,23 +121,6 @@ public class App {
     }).start();
   }
 
-  public void createRandonsChats() {
-    Chat chatRedes = new Chat("Redes II", "Grupo da matéria de Redes II 2024.1");
-
-    User user = new User("10", "Ricardo");
-    User user2 = new User("11", "Marlos");
-
-    LocalDateTime today = LocalDateTime.now();
-    LocalDateTime dateTime = today.minusDays(0);
-    Message message = new Message("Olá mundo", user2.getUserId(), dateTime);
-
-    chatRedes.addMessage(message);
-    this.addUser(user);
-    this.addUser(user2);
-    this.setUser(user);
-    this.addChat(chatRedes);
-  }
-
   // Gets e Sets
 
   public Chat getChatById(String chatId) {
@@ -180,9 +162,9 @@ public class App {
     chats.remove(chat);
   }
 
-  public User getUserById(String userId) {
+  public User getUserByIp(String userId) {
     for (User user : users) {
-      if (user.getUserId().equals(userId)) {
+      if (user.getUserIp().equals(userId)) {
         return user;
       }
     }

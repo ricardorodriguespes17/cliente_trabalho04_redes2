@@ -67,7 +67,7 @@ public class ChatController implements Initializable {
 
     LocalDateTime currentTime = LocalDateTime.now();
 
-    Message message = new Message(value.trim(), user.getUserId(), currentTime);
+    Message message = new Message(value.trim(), user.getUserIp(), currentTime);
     messageSendListener = (obs, wasSend, isSend) -> {
       message.isSendProperty().removeListener(messageSendListener);
       renderMessages(null);
@@ -223,7 +223,7 @@ public class ChatController implements Initializable {
     HBox hbox = new HBox();
     Label messageLabel = new Label(message.getText());
     Label messageTimeLabel = new Label(message.getTime());
-    String userId = message.getUserId();
+    String userIp = message.getUserIp();
     User user = app.getUser();
 
     messageTimeLabel.getStyleClass().add("messageTime");
@@ -242,17 +242,23 @@ public class ChatController implements Initializable {
       hbox.getChildren().add(button);
     }
 
-    System.out.println(userId);
-
-    if (userId.equals(user.getUserId())) {
+    if (userIp.equals(user.getUserIp())) {
       parent.getStyleClass().add("selfMessageBox");
       hbox.getChildren().add(0, messageTimeLabel);
-    } else if (userId.equals("server")) {
+    } else if (userIp.equals(App.SERVER_IP)) {
       parent.getStyleClass().add("serverMessageBox");
     } else {
-      // User messageUser = app.getUserById(userId);
+      User messageUser = app.getUserByIp(userIp);
+      String username;
+
+      if (messageUser != null) {
+        username = messageUser.getName();
+      } else {
+        username = userIp;
+      }
+
       parent.getStyleClass().add("otherMessageBox");
-      Label userNameLabel = new Label(userId);
+      Label userNameLabel = new Label(username);
       userNameLabel.getStyleClass().add("messageUserName");
       vbox.getChildren().add(userNameLabel);
       hbox.getChildren().add(messageTimeLabel);
