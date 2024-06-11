@@ -1,6 +1,7 @@
 package model;
 
 import java.net.*;
+import java.time.LocalDateTime;
 import java.io.*;
 
 public class TCPClient extends Client {
@@ -8,8 +9,8 @@ public class TCPClient extends Client {
   private ObjectOutputStream output;
   private ObjectInputStream input;
 
-  public TCPClient(String host, int port) {
-    super(host, port);
+  public TCPClient(App app, String host, int port) {
+    super(app, host, port);
   }
 
   @Override
@@ -60,14 +61,55 @@ public class TCPClient extends Client {
         Object receivedObject;
         do {
           receivedObject = input.readObject();
-          String message = (String) receivedObject;
-          System.out.println("Servidor: " + message);
+          String data = (String) receivedObject;
+          System.out.println("> Servidor: " + data);
+          sanitizeReceivedData(data);
         } while (receivedObject != null);
 
       } catch (IOException | ClassNotFoundException e) {
         e.printStackTrace();
       }
     }).start();
+  }
+
+  public void sanitizeReceivedData(String data) {
+    String[] dataSplited = data.split("/");
+    String type = dataSplited[0];
+    String chatId = dataSplited[1];
+    String user = dataSplited[2];
+
+    Chat chat = app.getChatById(chatId);
+    LocalDateTime localDateTime = LocalDateTime.now();
+
+    switch (type) {
+      case "send":
+        String messageText = "";
+        for (int i = 3; i < dataSplited.length; i++) {
+          messageText += dataSplited[i] + " ";
+        }
+        messageText = messageText.trim();
+
+        Message message = new Message(messageText, user, localDateTime);
+        chat.addMessage(message);
+        System.out.println("> " + user + " enviou '" + messageText + "' para " + chatId);
+        break;
+      case "join":
+        if (chat != null) {
+          System.out.println("> " + user + " Entrou no grupo " + chatId);
+          Message message2 = new Message(user + " entrou do grupo", "server", localDateTime);
+          chat.addMessage(message2);
+        }
+        break;
+      case "leave":
+        if (chat != null) {
+          System.out.println("> " + user + " saiu do grupo " + chatId);
+          Message message3 = new Message(user + " saiu do grupo", "server", localDateTime);
+          chat.addMessage(message3);
+        }
+        break;
+      default:
+        return;
+    }
   }
 
 }

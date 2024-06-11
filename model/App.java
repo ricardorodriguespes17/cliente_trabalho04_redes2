@@ -25,7 +25,7 @@ public class App {
     error = null;
     chats = new ArrayList<>();
     users = new ArrayList<>();
-    tcpClient = Client.createClient("TCP", "192.168.1.11", 6789);
+    tcpClient = Client.createClient(this, "TCP", "192.168.1.11", 6789);
     startClient();
   }
 

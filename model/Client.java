@@ -6,8 +6,10 @@ import java.net.UnknownHostException;
 public abstract class Client {
   protected int port;
   protected String host;
+  protected App app;
 
-  public Client(String host, int port) {
+  public Client(App app, String host, int port) {
+    this.app = app;
     this.port = port;
     this.host = host;
   }
@@ -22,9 +24,9 @@ public abstract class Client {
 
   public abstract void receive() throws IOException;
 
-  public static Client createClient(String type, String serverAddress, int serverPort) {
+  public static Client createClient(App app, String type, String serverAddress, int serverPort) {
     if (type.equals("TCP")) {
-      return new TCPClient(serverAddress, serverPort);
+      return new TCPClient(app, serverAddress, serverPort);
     } else {
       throw new IllegalArgumentException("Tipo de cliente desconhecido: " + type);
     }
