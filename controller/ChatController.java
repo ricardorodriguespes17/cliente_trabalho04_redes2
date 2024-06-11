@@ -303,6 +303,10 @@ public class ChatController implements Initializable {
     chat = app.getChatById(chatId);
     chatNameLabel.setText(chat.getChatName());
     renderMessages(null);
+    chat.addListener(() -> {
+      renderMessages(null);
+    });
+
   }
 
 }

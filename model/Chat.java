@@ -14,6 +14,7 @@ public class Chat implements Comparable<Chat> {
   private List<Message> messages;
   private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   private static final Random RANDOM = new SecureRandom();
+  private Runnable observer;
 
   public Chat(String chatId, String chatName, String description) {
     this.chatId = chatId;
@@ -46,6 +47,16 @@ public class Chat implements Comparable<Chat> {
     }
 
     return sb.toString();
+  }
+
+  public void addListener(Runnable observer) {
+    this.observer = observer;
+  }
+
+  public void runListener() {
+    if (observer != null) {
+      observer.run();
+    }
   }
 
   public String getChatId() {
@@ -121,6 +132,7 @@ public class Chat implements Comparable<Chat> {
   public void addMessage(Message message) {
     messages.add(message);
     Collections.sort(messages);
+    runListener();
   }
 
   public void setMessages(List<Message> messages) {
