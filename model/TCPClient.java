@@ -76,7 +76,7 @@ public class TCPClient extends Client {
     String[] dataSplited = data.split("/");
     String type = dataSplited[0];
     String chatId = dataSplited[1];
-    String userId = dataSplited[1];
+    String userId = dataSplited[2];
 
     Chat chat = app.getChatById(chatId);
     LocalDateTime localDateTime = LocalDateTime.now();
