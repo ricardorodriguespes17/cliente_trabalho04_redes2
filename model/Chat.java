@@ -16,6 +16,14 @@ public class Chat implements Comparable<Chat> {
   private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   private static final Random RANDOM = new SecureRandom();
 
+  public Chat(String chatId, String chatName, String description) {
+    this.chatId = chatId;
+    this.chatName = chatName;
+    this.description = description;
+    messages = new ArrayList<>();
+    app = App.getInstance();
+  }
+
   public Chat(String chatName) {
     this.chatId = generateRandomString(5);
     this.chatName = chatName;

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.JoinChatController">
+   <stylesheets>
+      <URL value="@css/common.css" />
+      <URL value="@css/dark.css" />
+      <URL value="@css/joinChat.css" />
+   </stylesheets>
+   <top>
+      <HBox styleClass="header" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#goToMainScreen">
+               <graphic>
+                  <SVGPath content="M15.293 3.293 6.586 12l8.707 8.707 1.414-1.414L9.414 12l7.293-7.293-1.414-1.414z" />
+               </graphic>
+            </Button>
+            <Label text="Entrar em um grupo" />
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <VBox styleClass="main" BorderPane.alignment="CENTER">
+         <children>
+            <VBox>
+               <children>
+                  <Label text="Código do grupo" />
+                  <TextField fx:id="inputCode" onAction="#onJoin" />
+                  <Label fx:id="errorLabel" styleClass="errorLabel" text="Erro ao criar o grupo" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </center>
+   <bottom>
+      <HBox styleClass="footer" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="buttonJoin" mnemonicParsing="false" onAction="#onJoin" text="Entrar" />
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>

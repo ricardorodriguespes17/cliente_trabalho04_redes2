@@ -1,0 +1,45 @@
+.header {
+  -fx-background-color: transparent;
+  -fx-border-color: -fx-border;
+  -fx-border-width: 0 0 1 0;
+  -fx-pref-height: 60;
+  -fx-alignment: center_left;
+  -fx-padding: 7 10 7 10;
+  -fx-alignment: center_left;
+}
+
+.header Label {
+  -fx-font-size: 22;
+}
+
+.main {
+  -fx-padding: 10 15 10 15;
+  -fx-spacing: 20;
+}
+
+.main VBox {
+  -fx-spacing: 5;
+}
+
+.errorLabel {
+  -fx-text-fill: -fx-primary-color;
+}
+
+TextField {
+  -fx-background-color: -fx-border;
+}
+
+.footer {
+  -fx-alignment: center;
+  -fx-pref-height: 60;
+  -fx-padding: 10;
+  -fx-spacing: 7;
+}
+
+.footer Button {
+  -fx-pref-width: 120;
+  -fx-font-size: 16;
+  -fx-background-color: -fx-primary-color;
+  -fx-border-radius: 8;
+  -fx-background-radius: 8;
+}

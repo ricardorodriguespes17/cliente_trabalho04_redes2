@@ -18,9 +18,11 @@ public class App {
   private List<User> users;
   private Client tcpClient;
   private BooleanProperty isLoading;
+  private String error;
 
   public App() {
     isLoading = new SimpleBooleanProperty(false);
+    error = null;
     chats = new ArrayList<>();
     users = new ArrayList<>();
     tcpClient = Client.createClient("TCP", "192.168.1.11", 6789);
@@ -77,21 +79,26 @@ public class App {
     }).start();
   }
 
-  public void join(Chat chat, User user) {
+  public void join(String chatId, User user) {
     System.out.println("> Enviando join para o server");
     setLoading(true);
 
     new Thread(() -> {
       try {
-        tcpClient.join(chat.getChatId(), user.getName());
+        tcpClient.join(chatId, user.getName());
       } catch (IOException e) {
         System.out.println("> Erro: Falha ao enviar um join para servidor");
+        setError("Código inválido");
+        return;
       } finally {
-        System.out.println("> Join enviado com sucesso");
         Platform.runLater(() -> {
           setLoading(false);
         });
       }
+
+      Chat chat = new Chat(chatId, "Grupo", null);
+      this.addChat(chat);
+      System.out.println("> Join enviado com sucesso");
     }).start();
   }
 
@@ -165,7 +172,6 @@ public class App {
   public void addChat(Chat chat) {
     chats.add(chat);
     Collections.sort(chats);
-    this.join(chat, user);
   }
 
   public void removeChat(Chat chat) {
@@ -229,6 +235,14 @@ public class App {
 
   public void setLoading(boolean isLoading) {
     this.isLoading.set(isLoading);
+  }
+
+  public String getError() {
+    return error;
+  }
+
+  public void setError(String error) {
+    this.error = error;
   }
 
 }

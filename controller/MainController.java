@@ -2,7 +2,7 @@
 * Autor............: Ricardo Rodrigues Neto
 * Matricula........: 201710560
 * Inicio...........: 07/06/2024
-* Ultima alteracao.: 10/06/2024
+* Ultima alteracao.: 11/06/2024
 * Nome.............: Controller
 * Funcao...........: Controla a tela principal da aplicação.
 *************************************************************** */
@@ -53,9 +53,21 @@ public class MainController implements Initializable {
   private TextField inputSearch;
 
   @FXML
-  private void goToCreateGroup() {
+  private void getToCreateChat() {
     try {
-      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/NewGroupScreen.fxml"));
+      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/NewChatScreen.fxml"));
+      Parent mainScreen = fxmlLoader.load();
+      Stage stage = (Stage) scrollMainBox.getScene().getWindow();
+      stage.setScene(new Scene(mainScreen));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  @FXML
+  private void goToJoinChat() {
+    try {
+      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/JoinChatScreen.fxml"));
       Parent mainScreen = fxmlLoader.load();
       Stage stage = (Stage) scrollMainBox.getScene().getWindow();
       stage.setScene(new Scene(mainScreen));

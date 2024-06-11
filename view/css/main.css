@@ -104,16 +104,17 @@
   -fx-padding: 10;
   -fx-border-color: -fx-border;
   -fx-border-width: 1 0 0 0;
+  -fx-spacing: 10;
 }
 
-.buttonNewGroup {
-  -fx-pref-width: 40;
+.footer Button {
+  -fx-pref-width: 30;
   -fx-font-size: 16;
   -fx-text-fill: -fx-primary-color;
   -fx-border-radius: 8;
   -fx-background-radius: 8;
 }
 
-.buttonNewGroup * {
+.footer Button * {
   -fx-fill: -fx-primary-color;
 }

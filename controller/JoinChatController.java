@@ -10,48 +10,48 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.App;
-import model.Chat;
 
-public class NewGroupController implements Initializable {
+public class JoinChatController implements Initializable {
 
   @FXML
-  TextField inputChatName;
+  TextField inputCode;
   @FXML
-  TextArea inputDescription;
+  Button buttonJoin;
   @FXML
-  Button buttonCreate;
+  Label errorLabel;
 
   private App app;
   private ChangeListener<Boolean> listener;
 
   @FXML
-  private void onCreate() {
+  private void onJoin() {
     if (app.isLoading())
       return;
 
-    String chatName = inputChatName.getText().trim();
-    String description = inputDescription.getText().trim();
+    String chatId = inputCode.getText().trim();
 
-    if (chatName.equals(""))
+    if (chatId.equals(""))
       return;
 
-    Chat chat = new Chat(chatName, description);
-    ChatController.chatId = chat.getChatId();
-    app.addChat(chat);
+    app.join(chatId, app.getUser());
 
-    buttonCreate.setText("Criando...");
-    buttonCreate.setDisable(true);
-    inputChatName.setDisable(true);
-    inputDescription.setDisable(true);
+    buttonJoin.setText("Entrando...");
+    buttonJoin.setDisable(true);
+    inputCode.setDisable(true);
 
     listener = (obs, wasLoading, isLoading) -> {
       if (!isLoading) {
         app.isLoadingProperty().removeListener(listener);
-        goToNewChat();
+        if (app.getError() != null) {
+          errorLabel = new Label(app.getError());
+        } else {
+          ChatController.chatId = chatId;
+          goToNewChat();
+        }
       }
     };
 
@@ -66,7 +66,7 @@ public class NewGroupController implements Initializable {
     try {
       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/MainScreen.fxml"));
       Parent mainScreen = fxmlLoader.load();
-      Stage stage = (Stage) inputChatName.getScene().getWindow();
+      Stage stage = (Stage) inputCode.getScene().getWindow();
       stage.setScene(new Scene(mainScreen));
     } catch (Exception e) {
       e.printStackTrace();
@@ -77,7 +77,7 @@ public class NewGroupController implements Initializable {
     try {
       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/ChatScreen.fxml"));
       Parent mainScreen = fxmlLoader.load();
-      Stage stage = (Stage) inputChatName.getScene().getWindow();
+      Stage stage = (Stage) inputCode.getScene().getWindow();
       stage.setScene(new Scene(mainScreen));
     } catch (Exception e) {
       e.printStackTrace();
@@ -86,6 +86,7 @@ public class NewGroupController implements Initializable {
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+    errorLabel.setText("");
     app = App.getInstance();
   }
 
