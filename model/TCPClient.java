@@ -76,7 +76,6 @@ public class TCPClient extends Client {
     String[] dataSplited = data.split("/");
     String type = dataSplited[0];
     String chatId = dataSplited[1];
-    String user = dataSplited[2];
 
     Chat chat = app.getChatById(chatId);
     LocalDateTime localDateTime = LocalDateTime.now();
@@ -88,9 +87,9 @@ public class TCPClient extends Client {
           messageText += dataSplited[i] + " ";
         }
         messageText = messageText.trim();
-        System.out.println("> " + user + " enviou '" + messageText);
+        System.out.println("> Server enviou '" + messageText);
 
-        Message message = new Message(messageText, user, localDateTime);
+        Message message = new Message(messageText, "server", localDateTime);
         chat.addMessage(message);
         break;
       case "error":
