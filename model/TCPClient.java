@@ -83,13 +83,14 @@ public class TCPClient extends Client {
     switch (type) {
       case "send":
         String messageText = "";
-        for (int i = 3; i < dataSplited.length; i++) {
+        for (int i = 2; i < dataSplited.length; i++) {
           messageText += dataSplited[i] + " ";
         }
         messageText = messageText.trim();
-        System.out.println("> Server enviou '" + messageText);
+        System.out.println("> Server enviou " + messageText);
 
         Message message = new Message(messageText, "server", localDateTime);
+        message.setSend(true);
         chat.addMessage(message);
         break;
       case "error":
