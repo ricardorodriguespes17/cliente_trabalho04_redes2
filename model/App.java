@@ -44,14 +44,17 @@ public class App {
         tcpClient.receive();
       } catch (UnknownHostException e) {
         System.out.println("> Erro: Houve um problema ao encontrar o servidor");
+        return;
       } catch (IOException e) {
         System.out.println("> Erro: Houve um problema ao conectar o servidor");
+        return;
       } finally {
         Platform.runLater(() -> {
-          System.out.println("> Server iniciado");
           setLoading(false);
         });
       }
+
+      System.out.println("> Server iniciado");
     }).start();
   }
 
