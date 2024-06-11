@@ -199,11 +199,10 @@ public class MainController implements Initializable {
 
     for (Chat chat : chats) {
       Message lastMessage = chat.getLastMessage();
-      int unreadsCount = chat.getNumberOfMessagesUnread(app.getUser().getUserIp());
+      int unreadsCount = chat.getNumberOfMessagesUnread(App.LOCAL_IP);
       String userName = "";
       String messageTime = "";
       String textLastMessage = "";
-      User user = app.getUser();
 
       if (lastMessage != null) {
         messageTime = lastMessage.getDateToChat();
@@ -213,7 +212,7 @@ public class MainController implements Initializable {
           userName = messageUser.getName();
         }
 
-        if (lastMessage.getUserIp().equals(user.getUserIp())) {
+        if (lastMessage.getUserIp().equals(App.LOCAL_IP)) {
           userName = "Você";
         }
 

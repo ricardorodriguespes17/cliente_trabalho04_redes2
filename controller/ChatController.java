@@ -60,21 +60,20 @@ public class ChatController implements Initializable {
   @FXML
   private void sendMessage() {
     String value = inputMessage.getText();
-    User user = app.getUser();
 
     if (value.trim().equals(""))
       return;
 
     LocalDateTime currentTime = LocalDateTime.now();
 
-    Message message = new Message(value.trim(), user.getUserIp(), currentTime);
+    Message message = new Message(value.trim(), App.LOCAL_IP, currentTime);
     messageSendListener = (obs, wasSend, isSend) -> {
       message.isSendProperty().removeListener(messageSendListener);
       renderMessages(null);
     };
     message.isSendProperty().addListener(messageSendListener);
     chat.addMessage(message);
-    app.send(chat, user, message);
+    app.send(chat, message);
     inputMessage.setText("");
     renderMessages(null);
   }
@@ -147,7 +146,7 @@ public class ChatController implements Initializable {
       return;
 
     app.removeChat(chat);
-    app.leave(chat, app.getUser());
+    app.leave(chat);
 
     listener = (obs, wasLoading, isLoading) -> {
       if (!isLoading) {
@@ -224,7 +223,6 @@ public class ChatController implements Initializable {
     Label messageLabel = new Label(message.getText());
     Label messageTimeLabel = new Label(message.getTime());
     String userIp = message.getUserIp();
-    User user = app.getUser();
 
     messageTimeLabel.getStyleClass().add("messageTime");
     hbox.getStyleClass().add("messageTextBox");
@@ -242,7 +240,7 @@ public class ChatController implements Initializable {
       hbox.getChildren().add(button);
     }
 
-    if (userIp.equals(user.getUserIp())) {
+    if (userIp.equals(App.LOCAL_IP)) {
       parent.getStyleClass().add("selfMessageBox");
       hbox.getChildren().add(0, messageTimeLabel);
     } else if (userIp.equals(App.SERVER_IP)) {

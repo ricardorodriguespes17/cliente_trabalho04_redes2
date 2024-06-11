@@ -22,7 +22,6 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.App;
-import model.User;
 
 public class SplashController implements Initializable {
 
@@ -54,9 +53,6 @@ public class SplashController implements Initializable {
 
   private void initApp() {
     app = App.getInstance();
-    User user = new User("ricardo", "Ricardo");
-    app.setUser(user);
-    app.addUser(user);
 
     listener = (obs, wasLoading, isLoading) -> {
       if (!isLoading) {

@@ -13,7 +13,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 public class App {
   private static App instance;
   public static String SERVER_IP = "192.168.1.11";
-  private User user = null;
+  public static String LOCAL_IP = null;
   private List<Chat> chats;
   private List<User> users;
   private Client tcpClient;
@@ -60,12 +60,12 @@ public class App {
     }).start();
   }
 
-  public void send(Chat chat, User user, Message message) {
+  public void send(Chat chat, Message message) {
     System.out.println("> Enviando send para o server");
 
     new Thread(() -> {
       try {
-        tcpClient.send(chat.getChatId(), user.getName(), message.getText());
+        tcpClient.send(chat.getChatId(), App.LOCAL_IP, message.getText());
       } catch (IOException e) {
         System.out.println("> Erro: Falha ao enviar um send para servidor");
         Platform.runLater(() -> {
@@ -82,13 +82,13 @@ public class App {
     }).start();
   }
 
-  public void join(String chatId, User user) {
+  public void join(String chatId) {
     System.out.println("> Enviando join para o server");
     setLoading(true);
 
     new Thread(() -> {
       try {
-        tcpClient.join(chatId, user.getName());
+        tcpClient.join(chatId, App.LOCAL_IP);
       } catch (IOException e) {
         System.out.println("> Erro: Falha ao enviar um join para servidor");
         setError("Código inválido");
@@ -101,19 +101,17 @@ public class App {
         });
       }
 
-      Chat chat = new Chat(chatId, "Grupo", null);
-      this.addChat(chat);
       System.out.println("> Join enviado com sucesso");
     }).start();
   }
 
-  public void leave(Chat chat, User user) {
+  public void leave(Chat chat) {
     System.out.println("> Enviando leave para o server");
     setLoading(true);
 
     new Thread(() -> {
       try {
-        tcpClient.leave(chat.getChatId(), user.getName());
+        tcpClient.leave(chat.getChatId(), App.LOCAL_IP);
       } catch (IOException e) {
         System.out.println("> Erro: Falha ao enviar um leave para servidor");
         return;
@@ -188,14 +186,6 @@ public class App {
 
   public void removeUser(User user) {
     users.remove(user);
-  }
-
-  public User getUser() {
-    return user;
-  }
-
-  public void setUser(User user) {
-    this.user = user;
   }
 
   public void setChats(List<Chat> chats) {

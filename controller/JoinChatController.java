@@ -37,7 +37,7 @@ public class JoinChatController implements Initializable {
     if (chatId.equals(""))
       return;
 
-    app.join(chatId, app.getUser());
+    app.join(chatId);
 
     buttonJoin.setText("Entrando...");
     buttonJoin.setDisable(true);
