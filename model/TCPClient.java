@@ -31,13 +31,25 @@ public class TCPClient extends Client {
   }
 
   @Override
-  public void join(String groupId, String user) {
-    throw new UnsupportedOperationException("Unimplemented method 'join'");
+  public void join(String groupId, String user) throws IOException {
+    if (socket.isConnected()) {
+      String message = new String("join/" + groupId + "/" + user);
+      output.writeObject(message);
+      output.flush();
+    } else {
+      System.out.println("> Não conectado");
+    }
   }
 
   @Override
-  public void leave(String groupId, String user) {
-    throw new UnsupportedOperationException("Unimplemented method 'leave'");
+  public void leave(String groupId, String user) throws IOException {
+    if (socket.isConnected()) {
+      String message = new String("leave/" + groupId + "/" + user);
+      output.writeObject(message);
+      output.flush();
+    } else {
+      System.out.println("> Não conectado");
+    }
   }
 
   @Override
