@@ -74,6 +74,7 @@ public class ChatController implements Initializable {
     };
     message.isSendProperty().addListener(messageSendListener);
     chat.addMessage(message);
+    app.send(chat, user, message);
     inputMessage.setText("");
     renderMessages(null);
   }
@@ -146,6 +147,7 @@ public class ChatController implements Initializable {
       return;
 
     app.removeChat(chat);
+    app.leave(chat, app.getUser());
 
     listener = (obs, wasLoading, isLoading) -> {
       if (!isLoading) {

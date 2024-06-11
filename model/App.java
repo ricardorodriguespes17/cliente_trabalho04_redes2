@@ -111,12 +111,13 @@ public class App {
         tcpClient.leave(chat.getChatId(), user.getName());
       } catch (IOException e) {
         e.printStackTrace();
+        return;
       } finally {
-        System.out.println("> Leave enviado com sucesso");
         Platform.runLater(() -> {
           setLoading(false);
         });
       }
+      System.out.println("> Leave enviado com sucesso");
     }).start();
   }
 
@@ -176,7 +177,6 @@ public class App {
 
   public void removeChat(Chat chat) {
     chats.remove(chat);
-    this.leave(chat, user);
   }
 
   public User getUserById(String userId) {
