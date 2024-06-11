@@ -71,7 +71,10 @@ public class App {
         Platform.runLater(() -> {
           chat.getMessageByDateTime(message.getDateTime()).setError(true);
         });
+        return;
       } finally {
+        System.out.println("> send enviado com sucesso");
+
         Platform.runLater(() -> {
           chat.getMessageByDateTime(message.getDateTime()).setSend(true);
         });
@@ -91,6 +94,8 @@ public class App {
         setError("Código inválido");
         return;
       } finally {
+        System.out.println("> join enviado com sucesso");
+
         Platform.runLater(() -> {
           setLoading(false);
         });
@@ -110,14 +115,15 @@ public class App {
       try {
         tcpClient.leave(chat.getChatId(), user.getName());
       } catch (IOException e) {
-        e.printStackTrace();
+        System.out.println("> Erro: Falha ao enviar um leave para servidor");
         return;
       } finally {
+        System.out.println("> leave enviado com sucesso");
+
         Platform.runLater(() -> {
           setLoading(false);
         });
       }
-      System.out.println("> Leave enviado com sucesso");
     }).start();
   }
 
