@@ -95,6 +95,7 @@ public class TCPClient extends Client {
         chat.addMessage(message);
         break;
       case "error":
+        System.out.println("> Servidor: " + data);
         break;
       default:
         return;

@@ -242,15 +242,17 @@ public class ChatController implements Initializable {
       hbox.getChildren().add(button);
     }
 
+    System.out.println(userId);
+
     if (userId.equals(user.getUserId())) {
       parent.getStyleClass().add("selfMessageBox");
       hbox.getChildren().add(0, messageTimeLabel);
     } else if (userId.equals("server")) {
       parent.getStyleClass().add("serverMessageBox");
     } else {
-      User messageUser = app.getUserById(userId);
+      // User messageUser = app.getUserById(userId);
       parent.getStyleClass().add("otherMessageBox");
-      Label userNameLabel = new Label(messageUser.getName());
+      Label userNameLabel = new Label(userId);
       userNameLabel.getStyleClass().add("messageUserName");
       vbox.getChildren().add(userNameLabel);
       hbox.getChildren().add(messageTimeLabel);
