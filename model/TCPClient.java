@@ -88,27 +88,12 @@ public class TCPClient extends Client {
           messageText += dataSplited[i] + " ";
         }
         messageText = messageText.trim();
+        System.out.println("> " + user + " enviou '" + messageText);
 
         Message message = new Message(messageText, user, localDateTime);
         chat.addMessage(message);
-        this.send(chatId, user, message.getText());
-        System.out.println("> " + user + " enviou '" + messageText + "' para " + chatId);
         break;
-      case "join":
-        if (chat != null) {
-          System.out.println("> " + user + " Entrou no grupo " + chatId);
-          Message message2 = new Message(user + " entrou do grupo", "server", localDateTime);
-          chat.addMessage(message2);
-          this.send(chatId, "server", message2.getText());
-        }
-        break;
-      case "leave":
-        if (chat != null) {
-          System.out.println("> " + user + " saiu do grupo " + chatId);
-          Message message3 = new Message(user + " saiu do grupo", "server", localDateTime);
-          chat.addMessage(message3);
-          this.send(chatId, "server", message3.getText());
-        }
+      case "error":
         break;
       default:
         return;
