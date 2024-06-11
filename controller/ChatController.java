@@ -75,7 +75,6 @@ public class ChatController implements Initializable {
     chat.addMessage(message);
     app.send(chat, message);
     inputMessage.setText("");
-    renderMessages(null);
   }
 
   @FXML
@@ -309,10 +308,9 @@ public class ChatController implements Initializable {
     chat = app.getChatById(chatId);
     chatNameLabel.setText(chat.getChatName());
     renderMessages(null);
-    chat.addListener(() -> {
+    chat.getMessages().addListener((message) -> {
       renderMessages(null);
     });
-
   }
 
 }

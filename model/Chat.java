@@ -7,32 +7,33 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import model.util.ObservableList;
+
 public class Chat implements Comparable<Chat> {
   private String chatId;
   private String chatName;
   private String description;
-  private List<Message> messages;
+  private ObservableList<Message> messages;
   private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   private static final Random RANDOM = new SecureRandom();
-  private Runnable observer;
 
   public Chat(String chatId, String chatName, String description) {
     this.chatId = chatId;
     this.chatName = chatName;
     this.description = description;
-    messages = new ArrayList<>();
+    messages = new ObservableList<>();
   }
 
   public Chat(String chatName) {
     this.chatId = generateRandomString(5);
     this.chatName = chatName;
-    messages = new ArrayList<>();
+    messages = new ObservableList<>();
   }
 
   public Chat(String chatName, String description) {
     this.chatId = generateRandomString(5);
     this.chatName = chatName;
-    messages = new ArrayList<>();
+    messages = new ObservableList<>();
     if (description == null || description.equals("")) {
       this.description = null;
     }
@@ -47,16 +48,6 @@ public class Chat implements Comparable<Chat> {
     }
 
     return sb.toString();
-  }
-
-  public void addListener(Runnable observer) {
-    this.observer = observer;
-  }
-
-  public void runListener() {
-    if (observer != null) {
-      observer.run();
-    }
   }
 
   public String getChatId() {
@@ -75,8 +66,8 @@ public class Chat implements Comparable<Chat> {
     this.chatName = chatName;
   }
 
-  public List<Message> getMessagesByText(String text) {
-    List<Message> messages = new ArrayList<>();
+  public ObservableList<Message> getMessagesByText(String text) {
+    ObservableList<Message> messages = new ObservableList<>();
 
     for (Message message : this.messages) {
       if (message.getText().toLowerCase().contains(text.toLowerCase())) {
@@ -125,17 +116,16 @@ public class Chat implements Comparable<Chat> {
     return count;
   }
 
-  public List<Message> getMessages() {
+  public ObservableList<Message> getMessages() {
     return messages;
   }
 
   public void addMessage(Message message) {
     messages.add(message);
     Collections.sort(messages);
-    runListener();
   }
 
-  public void setMessages(List<Message> messages) {
+  public void setMessages(ObservableList<Message> messages) {
     Collections.sort(messages);
     this.messages = messages;
   }
