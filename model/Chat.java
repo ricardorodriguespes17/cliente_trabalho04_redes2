@@ -5,11 +5,13 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Random;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import model.util.ObservableList;
 
 public class Chat implements Comparable<Chat> {
   private String chatId;
-  private String chatName;
+  private StringProperty chatName;
   private String description;
   private ObservableList<Message> messages;
   private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -17,20 +19,20 @@ public class Chat implements Comparable<Chat> {
 
   public Chat(String chatId, String chatName, String description) {
     this.chatId = chatId;
-    this.chatName = chatName;
+    this.chatName = new SimpleStringProperty(chatName);
     this.description = description;
     messages = new ObservableList<>();
   }
 
   public Chat(String chatName) {
     this.chatId = generateRandomString(5);
-    this.chatName = chatName;
+    this.chatName = new SimpleStringProperty(chatName);
     messages = new ObservableList<>();
   }
 
   public Chat(String chatName, String description) {
     this.chatId = generateRandomString(5);
-    this.chatName = chatName;
+    this.chatName = new SimpleStringProperty(chatName);
     messages = new ObservableList<>();
     if (description == null || description.equals("")) {
       this.description = null;
@@ -56,12 +58,16 @@ public class Chat implements Comparable<Chat> {
     this.chatId = chatId;
   }
 
-  public String getChatName() {
+  public StringProperty getChatNameProperty() {
     return chatName;
   }
 
+  public String getChatName() {
+    return chatName.getValue();
+  }
+
   public void setChatName(String chatName) {
-    this.chatName = chatName;
+    this.chatName.set(chatName);
   }
 
   public ObservableList<Message> getMessagesByText(String text) {

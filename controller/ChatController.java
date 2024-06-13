@@ -312,9 +312,16 @@ public class ChatController implements Initializable {
       goToMainScreen();
     }
     renderMessages(null);
+
     chat.getMessages().addListener((message) -> {
       Platform.runLater(() -> {
         renderMessages(null);
+      });
+    });
+
+    chat.getChatNameProperty().addListener((chatName) -> {
+      Platform.runLater(() -> {
+        chatNameLabel.setText(chat.getChatName());
       });
     });
   }

@@ -255,6 +255,12 @@ public class MainController implements Initializable {
           renderChats(null);
         });
       });
+
+      chat.getChatNameProperty().addListener((chatName) -> {
+        Platform.runLater(() -> {
+          renderChats(null);
+        });
+      });
     }
   }
 
