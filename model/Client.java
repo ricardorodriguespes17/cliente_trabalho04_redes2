@@ -27,7 +27,9 @@ public abstract class Client {
   public static Client createClient(App app, String type, String serverAddress, int serverPort) {
     if (type.equals("TCP")) {
       return new TCPClient(app, serverAddress, serverPort);
-    } else {
+    } else if(type.equals("TEST")) {
+      return new FakeClient(app, serverAddress, serverPort);
+    }else {
       throw new IllegalArgumentException("Tipo de cliente desconhecido: " + type);
     }
   }

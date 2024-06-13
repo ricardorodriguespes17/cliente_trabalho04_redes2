@@ -23,35 +23,23 @@ public class TCPClient extends Client {
 
   @Override
   public void send(String groupId, String user, String data) throws IOException {
-    if (socket.isConnected()) {
-      String message = new String("send/" + groupId + "/" + user + "/" + data);
-      output.writeObject(message);
-      output.flush();
-    } else {
-      System.out.println("> Não conectado");
-    }
+    String message = new String("send/" + groupId + "/" + user + "/" + data);
+    output.writeObject(message);
+    output.flush();
   }
 
   @Override
   public void join(String groupId, String user) throws IOException {
-    if (socket.isConnected()) {
-      String message = new String("join/" + groupId + "/" + user);
-      output.writeObject(message);
-      output.flush();
-    } else {
-      System.out.println("> Não conectado");
-    }
+    String message = new String("join/" + groupId + "/" + user);
+    output.writeObject(message);
+    output.flush();
   }
 
   @Override
   public void leave(String groupId, String user) throws IOException {
-    if (socket.isConnected()) {
-      String message = new String("leave/" + groupId + "/" + user);
-      output.writeObject(message);
-      output.flush();
-    } else {
-      System.out.println("> Não conectado");
-    }
+    String message = new String("leave/" + groupId + "/" + user);
+    output.writeObject(message);
+    output.flush();
   }
 
   @Override
