@@ -42,7 +42,7 @@ public class NewChatController implements Initializable {
     Chat chat = new Chat(chatName, description);
     ChatController.chatId = chat.getChatId();
     app.addChat(chat);
-    app.join(chat.getChatId());
+    app.create(chat.getChatId(), chatName);
 
     buttonCreate.setText("Criando...");
     buttonCreate.setDisable(true);
