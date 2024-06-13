@@ -1,8 +1,12 @@
 package model;
 
-import java.net.*;
-import java.time.LocalDateTime;
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+import model.util.DataManager;
 
 public class TCPClient extends Client {
   private Socket socket;
@@ -43,6 +47,13 @@ public class TCPClient extends Client {
   }
 
   @Override
+  public void create(String groupId, String groupName, String user) throws IOException {
+    String message = new String("create/" + groupId + "/" + groupName + "/" + user);
+    output.writeObject(message);
+    output.flush();
+  }
+
+  @Override
   public void receive() throws IOException {
     new Thread(() -> {
       try {
@@ -65,27 +76,16 @@ public class TCPClient extends Client {
   public void sanitizeReceivedData(String data) {
     String[] dataSplited = data.split("/");
     String type = dataSplited[0];
-    String chatId = dataSplited[1];
-    String userId = dataSplited[2];
-
-    Chat chat = app.getChatById(chatId);
-    LocalDateTime localDateTime = LocalDateTime.now();
 
     switch (type) {
       case "send":
-        String messageText = "";
-        for (int i = 3; i < dataSplited.length; i++) {
-          messageText += dataSplited[i] + " ";
-        }
-        messageText = messageText.trim();
-        System.out.println("> " + userId + " enviou " + messageText);
-
-        Message message = new Message(messageText, userId, localDateTime);
-        message.setSend(true);
-        chat.addMessage(message);
+        DataManager.receiveSend(dataSplited[1], dataSplited[2], dataSplited[3]);
+        break;
+      case "chat":
+        DataManager.receiveChat(dataSplited[1], dataSplited[2]);
         break;
       case "error":
-        System.out.println("> Servidor: " + data);
+        DataManager.receiveError(dataSplited[1]);
         break;
       default:
         return;

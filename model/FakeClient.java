@@ -48,6 +48,15 @@ public class FakeClient extends Client {
   }
 
   @Override
+  public void create(String grupoId, String groupName, String user) throws IOException {
+    try {
+      Thread.sleep(1500);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @Override
   public void receive() throws IOException {
     try {
       Thread.sleep(1500);

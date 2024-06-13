@@ -22,6 +22,8 @@ public abstract class Client {
 
   public abstract void leave(String grupoId, String user) throws IOException;
 
+  public abstract void create(String grupoId, String grupoName, String user) throws IOException;
+
   public abstract void receive() throws IOException;
 
   public static Client createClient(App app, String type, String serverAddress, int serverPort) {

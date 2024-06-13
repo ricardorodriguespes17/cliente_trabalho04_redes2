@@ -122,8 +122,6 @@ public class App {
           setLoading(false);
         });
       }
-
-      System.out.println("> Join enviado com sucesso");
     }).start();
   }
 
@@ -139,6 +137,26 @@ public class App {
         return;
       } finally {
         System.out.println("> leave enviado com sucesso");
+
+        Platform.runLater(() -> {
+          setLoading(false);
+        });
+      }
+    }).start();
+  }
+
+  public void create(String chatId, String chatName) {
+    System.out.println("> Enviando create para o server");
+    setLoading(true);
+
+    new Thread(() -> {
+      try {
+        tcpClient.create(chatId, chatName, App.LOCAL_IP);
+      } catch (IOException e) {
+        System.out.println("> Erro: Falha ao enviar um create para servidor");
+        return;
+      } finally {
+        System.out.println("> create enviado com sucesso");
 
         Platform.runLater(() -> {
           setLoading(false);
