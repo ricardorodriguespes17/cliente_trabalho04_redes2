@@ -306,14 +306,16 @@ public class ChatController implements Initializable {
     scrollMainBox.setFitToWidth(true);
     app = App.getInstance();
     chat = app.getChatById(chatId);
-    if(chat != null) {
+    if (chat != null) {
       chatNameLabel.setText(chat.getChatName());
     } else {
       goToMainScreen();
     }
     renderMessages(null);
     chat.getMessages().addListener((message) -> {
-      renderMessages(null);
+      Platform.runLater(() -> {
+        renderMessages(null);
+      });
     });
   }
 

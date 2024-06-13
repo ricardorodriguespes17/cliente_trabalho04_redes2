@@ -17,7 +17,6 @@ public class TCPClient extends Client {
   public void connect() throws UnknownHostException, IOException {
     socket = new Socket(host, port);
     output = new ObjectOutputStream(socket.getOutputStream());
-    input = new ObjectInputStream(socket.getInputStream());
     App.LOCAL_IP = socket.getLocalAddress().getHostAddress();
     System.out.println("> Conectado ao servidor - IP: " + App.LOCAL_IP);
   }
@@ -46,21 +45,20 @@ public class TCPClient extends Client {
   @Override
   public void receive() throws IOException {
     new Thread(() -> {
-      Object receivedObject = null;
-      do {
-        String data = "";
-        try {
-          input.reset();
+      try {
+        input = new ObjectInputStream(socket.getInputStream());
+        Object receivedObject = null;
+        do {
+          String data = "";
           receivedObject = input.readObject();
           data = (String) receivedObject;
-        } catch (IOException | ClassNotFoundException e) {
-          System.out.println("> Erro: não foi possível ler a mensagem do servidor");
-          e.printStackTrace();
-        }
-
-        System.out.println("> Servidor: " + data);
-        sanitizeReceivedData(data);
-      } while (receivedObject != null);
+          System.out.println("> Servidor: " + data);
+          sanitizeReceivedData(data);
+        } while (receivedObject != null);
+      } catch (IOException | ClassNotFoundException e) {
+        System.out.println("> Erro: não foi possível ler a mensagem do servidor");
+        e.printStackTrace();
+      }
     }).start();
   }
 
