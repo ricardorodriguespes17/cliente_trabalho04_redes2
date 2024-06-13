@@ -47,17 +47,21 @@ public class TCPClient extends Client {
     new Thread(() -> {
       try {
         input = new ObjectInputStream(socket.getInputStream());
-        Object receivedObject;
-        do {
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+
+      Object receivedObject = null;
+      do {
+        try {
           receivedObject = input.readObject();
           String data = (String) receivedObject;
           System.out.println("> Servidor: " + data);
           sanitizeReceivedData(data);
-        } while (receivedObject != null);
-
-      } catch (IOException | ClassNotFoundException e) {
-        e.printStackTrace();
-      }
+        } catch (IOException | ClassNotFoundException e) {
+          System.out.println("> Erro: não foi possível ler a mensagem do servidor");
+        }
+      } while (receivedObject != null);
     }).start();
   }
 
