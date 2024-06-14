@@ -28,18 +28,3 @@
 TextField {
   -fx-background-color: -fx-border;
 }
-
-.footer {
-  -fx-alignment: center;
-  -fx-pref-height: 60;
-  -fx-padding: 10;
-  -fx-spacing: 7;
-}
-
-.footer Button {
-  -fx-pref-width: 120;
-  -fx-font-size: 16;
-  -fx-background-color: -fx-primary-color;
-  -fx-border-radius: 8;
-  -fx-background-radius: 8;
-}

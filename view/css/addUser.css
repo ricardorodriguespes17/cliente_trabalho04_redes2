@@ -7,12 +7,6 @@
   -fx-spacing: 5;
 }
 
-TextField, TextArea {
+TextField {
   -fx-background-color: -fx-border;
-}
-
-TextArea {
-  -fx-min-height: 100;
-  -fx-pref-height: 120;
-  -fx-control-inner-background: -fx-border;
 }

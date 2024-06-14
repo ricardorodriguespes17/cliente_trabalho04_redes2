@@ -109,6 +109,7 @@
 .footer HBox Button {
   -fx-pref-height: 28;
   -fx-pref-width: 28;
+  -fx-background-color: transparent;
 }
 
 .buttonSend {

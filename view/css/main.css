@@ -110,6 +110,7 @@
 .footer Button {
   -fx-pref-width: 30;
   -fx-font-size: 16;
+  -fx-background-color: transparent;
   -fx-text-fill: -fx-primary-color;
   -fx-border-radius: 8;
   -fx-background-radius: 8;

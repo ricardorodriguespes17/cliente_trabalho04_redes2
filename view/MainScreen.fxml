@@ -31,8 +31,8 @@
    </top>
    <stylesheets>
       <URL value="@css/common.css" />
-      <URL value="@css/main.css" />
       <URL value="@css/dark.css" />
+      <URL value="@css/main.css" />
    </stylesheets>
    <center>
       <ScrollPane fx:id="scrollMainBox" hbarPolicy="NEVER" BorderPane.alignment="TOP_CENTER">
