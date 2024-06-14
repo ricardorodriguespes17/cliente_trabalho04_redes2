@@ -7,10 +7,12 @@
 * Funcao...........: Gerencia os dados de um cliente.
 *************************************************************** */
 
-package model;
+package model.service;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
+
+import model.App;
 
 public abstract class Client {
   protected int port;
@@ -38,9 +40,11 @@ public abstract class Client {
   public static Client createClient(App app, String type, String serverAddress, int serverPort) {
     if (type.equals("TCP")) {
       return new TCPClient(app, serverAddress, serverPort);
-    } else if(type.equals("TEST")) {
+    } else if (type.equals("UDP")) {
+      return new UDPClient(app, serverAddress, serverPort);
+    } else if (type.equals("TEST")) {
       return new FakeClient(app, serverAddress, serverPort);
-    }else {
+    } else {
       throw new IllegalArgumentException("Tipo de cliente desconhecido: " + type);
     }
   }

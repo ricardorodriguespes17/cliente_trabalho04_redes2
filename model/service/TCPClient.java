@@ -2,12 +2,12 @@
 * Autor............: Ricardo Rodrigues Neto
 * Matricula........: 201710560
 * Inicio...........: 07/06/2024
-* Ultima alteracao.: 13/06/2024
+* Ultima alteracao.: 14/06/2024
 * Nome.............: TCPClient
 * Funcao...........: Monta um cliente usando o protocolo TCP.
 *************************************************************** */
 
-package model;
+package model.service;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -15,6 +15,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import model.App;
 import model.util.DataManager;
 
 public class TCPClient extends Client {

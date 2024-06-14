@@ -2,15 +2,17 @@
 * Autor............: Ricardo Rodrigues Neto
 * Matricula........: 201710560
 * Inicio...........: 12/06/2024
-* Ultima alteracao.: 13/06/2024
+* Ultima alteracao.: 14/06/2024
 * Nome.............: FakeClient
 * Funcao...........: Monta um cliente falso, apenas para testes.
 *************************************************************** */
 
-package model;
+package model.service;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
+
+import model.App;
 
 public class FakeClient extends Client {
 

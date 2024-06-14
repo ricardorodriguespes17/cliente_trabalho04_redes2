@@ -17,6 +17,7 @@ import java.util.List;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import model.service.Client;
 
 public class App {
   private static App instance;
@@ -25,6 +26,7 @@ public class App {
   private List<Chat> chats;
   private List<User> users;
   private Client tcpClient;
+  private Client udpClient;
   private BooleanProperty isLoading;
   private String error;
 
@@ -41,8 +43,10 @@ public class App {
 
     if (mode != null && mode.equals("TEST")) {
       tcpClient = Client.createClient(this, mode, SERVER_IP, 6789);
+      udpClient = Client.createClient(this, mode, SERVER_IP, 6789);
     } else {
       tcpClient = Client.createClient(this, "TCP", SERVER_IP, 6789);
+      udpClient = Client.createClient(this, "UDP", SERVER_IP, 6789);
     }
     startClient();
   }
@@ -73,6 +77,7 @@ public class App {
     new Thread(() -> {
       try {
         tcpClient.connect();
+        udpClient.connect();
         tcpClient.receive();
       } catch (IOException e) {
         System.out.println("> Erro: Houve um problema ao conectar o servidor");
@@ -90,10 +95,13 @@ public class App {
   public void send(Chat chat, Message message) {
     System.out.println("> Enviando send para o server");
 
+    System.out.println(chat + " " + message);
+
     new Thread(() -> {
       try {
-        tcpClient.send(chat.getChatId(), App.LOCAL_IP, message.getText());
+        udpClient.send(chat.getChatId(), App.LOCAL_IP, message.getText());
       } catch (IOException e) {
+        e.printStackTrace();
         System.out.println("> Erro: Falha ao enviar um send para servidor");
         Platform.runLater(() -> {
           chat.getMessageByDateTime(message.getDateTime()).setError(true);
