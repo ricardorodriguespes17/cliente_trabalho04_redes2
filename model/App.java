@@ -1,7 +1,6 @@
 package model;
 
 import java.io.IOException;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -27,11 +26,11 @@ public class App {
     users = new ArrayList<>();
     SERVER_IP = getVariableServerIP();
     String mode = getVariableMode();
-    
+
     System.out.println("> IP do Servidor: " + SERVER_IP);
     System.out.println("> Modo: " + mode);
-    
-    if(mode != null && mode.equals("TEST")) {
+
+    if (mode != null && mode.equals("TEST")) {
       tcpClient = Client.createClient(this, mode, SERVER_IP, 6789);
     } else {
       tcpClient = Client.createClient(this, "TCP", SERVER_IP, 6789);
@@ -66,9 +65,6 @@ public class App {
       try {
         tcpClient.connect();
         tcpClient.receive();
-      } catch (UnknownHostException e) {
-        System.out.println("> Erro: Houve um problema ao encontrar o servidor");
-        return;
       } catch (IOException e) {
         System.out.println("> Erro: Houve um problema ao conectar o servidor");
         return;
