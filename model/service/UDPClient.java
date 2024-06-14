@@ -1,3 +1,12 @@
+/* ***************************************************************
+* Autor............: Ricardo Rodrigues Neto
+* Matricula........: 201710560
+* Inicio...........: 14/06/2024
+* Ultima alteracao.: 14/06/2024
+* Nome.............: UDPClient
+* Funcao...........: Monta um cliente usando o protocolo UDP.
+*************************************************************** */
+
 package model.service;
 
 import java.io.IOException;
@@ -18,7 +27,6 @@ public class UDPClient extends Client {
   @Override
   public void connect() throws UnknownHostException, IOException {
     socket = new DatagramSocket();
-    socket.connect(InetAddress.getByName(host), port);
   }
 
   @Override
@@ -26,6 +34,8 @@ public class UDPClient extends Client {
     String message = new String("send/" + groupId + "/" + user + "/" + data);
     byte[] byteData = message.getBytes();
 
+    socket = new DatagramSocket();
+    socket.connect(InetAddress.getByName(host), port);
     socket.send(new DatagramPacket(byteData, byteData.length));
   }
 

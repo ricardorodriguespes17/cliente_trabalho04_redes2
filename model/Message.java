@@ -30,6 +30,7 @@ public class Message implements Comparable<Message> {
     this.dateTime = dateTime;
     this.read = false;
     send = new SimpleBooleanProperty(false);
+    error = new SimpleBooleanProperty(false);
   }
 
   public String getText() {

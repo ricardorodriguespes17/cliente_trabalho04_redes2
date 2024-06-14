@@ -2,7 +2,7 @@
 * Autor............: Ricardo Rodrigues Neto
 * Matricula........: 201710560
 * Inicio...........: 10/06/2024
-* Ultima alteracao.: 13/06/2024
+* Ultima alteracao.: 14/06/2024
 * Nome.............: App
 * Funcao...........: Gerencia os cruds e informações da aplicação.
 *************************************************************** */
@@ -43,10 +43,10 @@ public class App {
 
     if (mode != null && mode.equals("TEST")) {
       tcpClient = Client.createClient(this, mode, SERVER_IP, 6789);
-      udpClient = Client.createClient(this, mode, SERVER_IP, 6789);
+      udpClient = Client.createClient(this, mode, SERVER_IP, 6790);
     } else {
       tcpClient = Client.createClient(this, "TCP", SERVER_IP, 6789);
-      udpClient = Client.createClient(this, "UDP", SERVER_IP, 6789);
+      udpClient = Client.createClient(this, "UDP", SERVER_IP, 6790);
     }
     startClient();
   }
@@ -94,8 +94,6 @@ public class App {
 
   public void send(Chat chat, Message message) {
     System.out.println("> Enviando send para o server");
-
-    System.out.println(chat + " " + message);
 
     new Thread(() -> {
       try {
