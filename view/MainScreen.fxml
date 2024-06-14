@@ -64,14 +64,19 @@
    <bottom>
       <HBox styleClass="footer" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#goToJoinChat">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#goToJoinChat" text="Entrar">
                <graphic>
                   <SVGPath content="M8.069 23.75 2.5 28.125V5a1.25 1.25 0 0 1 1.25 -1.25h22.5a1.25 1.25 0 0 1 1.25 1.25v17.5a1.25 1.25 0 0 1 -1.25 1.25zM15 12.5H10v2.5h5v3.75l5 -5 -5 -5z" />
                </graphic>
             </Button>
-            <Button mnemonicParsing="false" onAction="#getToCreateChat" styleClass="buttonNewGroup">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#getToCreateChat" styleClass="buttonNewGroup" text="Criar">
                <graphic>
                   <SVGPath content="M8.069 23.75 2.5 28.125V5a1.25 1.25 0 0 1 1.25 -1.25h22.5a1.25 1.25 0 0 1 1.25 1.25v17.5a1.25 1.25 0 0 1 -1.25 1.25zM13.75 12.5H10v2.5h3.75v3.75h2.5v-3.75h3.75v-2.5h-3.75V8.75h-2.5z" />
+               </graphic>
+            </Button>
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#goToContacts" text="Contatos">
+               <graphic>
+                  <SVGPath content="M11.2 12.8A6.4 6.4 0 1 0 11.2 0a6.4 6.4 0 0 0 0 12.8zm4.48 1.6h-0.835a8.713 8.713 0 0 1 -7.29 0h-0.835A6.721 6.721 0 0 0 0 21.12v2.08c0 1.325 1.075 2.4 2.4 2.4H20c1.325 0 2.4 -1.075 2.4 -2.4v-2.08a6.721 6.721 0 0 0 -6.72 -6.72z" />
                </graphic>
             </Button>
          </children>

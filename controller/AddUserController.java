@@ -34,13 +34,13 @@ public class AddUserController implements Initializable {
 
     User user = new User(ip, name);
     app.addUser(user);
-    goToMainScreen();
+    goBack();
   }
 
-  private void goToMainScreen() {
+  private void goBack() {
     if (ChatController.chatId == null) {
       try {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/MainScreen.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/ContactsScreen.fxml"));
         Parent newScreen = fxmlLoader.load();
         Stage stage = (Stage) inputIp.getScene().getWindow();
         stage.setTitle("Chat");

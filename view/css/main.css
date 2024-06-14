@@ -108,7 +108,7 @@
 }
 
 .footer Button {
-  -fx-pref-width: 30;
+  -fx-max-width: 100;
   -fx-font-size: 16;
   -fx-background-color: transparent;
   -fx-text-fill: -fx-primary-color;

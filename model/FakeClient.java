@@ -12,7 +12,7 @@ public class FakeClient extends Client {
   @Override
   public void connect() throws UnknownHostException, IOException {
     try {
-      Thread.sleep(1500);
+      Thread.sleep(500);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
@@ -59,7 +59,7 @@ public class FakeClient extends Client {
   @Override
   public void receive() throws IOException {
     try {
-      Thread.sleep(1500);
+      Thread.sleep(500);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }

@@ -55,20 +55,22 @@ public class MainController implements Initializable {
 
   @FXML
   private void getToCreateChat() {
-    try {
-      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/NewChatScreen.fxml"));
-      Parent mainScreen = fxmlLoader.load();
-      Stage stage = (Stage) scrollMainBox.getScene().getWindow();
-      stage.setScene(new Scene(mainScreen));
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    openScreen("../view/NewChatScreen.fxml");
   }
 
   @FXML
   private void goToJoinChat() {
+    openScreen("../view/JoinChatScreen.fxml");
+  }
+
+  @FXML
+  private void goToContacts() {
+    openScreen("../view/ContactsScreen.fxml");
+  }
+
+  private void openScreen(String path) {
     try {
-      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/JoinChatScreen.fxml"));
+      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(path));
       Parent mainScreen = fxmlLoader.load();
       Stage stage = (Stage) scrollMainBox.getScene().getWindow();
       stage.setScene(new Scene(mainScreen));
@@ -248,8 +250,8 @@ public class MainController implements Initializable {
     scrollMainBox.setFitToWidth(true);
     app = App.getInstance();
     renderChats(null);
-    
-    for(Chat chat : app.getChats()) {
+
+    for (Chat chat : app.getChats()) {
       chat.getMessages().addListener((message) -> {
         Platform.runLater(() -> {
           renderChats(null);

@@ -1,0 +1,28 @@
+.main {
+  -fx-alignment: bottom_center;
+  -fx-padding: 7 5 0 12;
+  -fx-spacing: 5;
+}
+
+.boxContact {
+  -fx-alignment: center;
+  -fx-min-height: 80;
+}
+
+.boxContact VBox {
+  -fx-alignment: center_left;
+}
+
+.boxContact Button {
+  -fx-pref-width: 0;
+}
+
+.boxContact Label {
+  -fx-opacity: 0.8;
+}
+
+.boxContact .title {
+  -fx-font-size: 24;
+  -fx-opacity: 1;
+}
+
