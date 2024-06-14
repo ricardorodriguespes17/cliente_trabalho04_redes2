@@ -10,3 +10,16 @@
 TextField {
   -fx-background-color: -fx-border;
 }
+
+.errorLabel {
+  -fx-text-fill: -fx-primary-color;
+  -fx-max-height: 0;
+  -fx-pref-height: 0;
+  -fx-min-height: 0;
+}
+
+.errorLabel.active {
+  -fx-max-height: 17;
+  -fx-pref-height: 17;
+  -fx-min-height: 17;
+}

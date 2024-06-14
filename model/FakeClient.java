@@ -23,7 +23,7 @@ public class FakeClient extends Client {
   @Override
   public void send(String groupId, String user, String data) throws IOException {
     try {
-      Thread.sleep(1500);
+      Thread.sleep(500);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
@@ -32,7 +32,7 @@ public class FakeClient extends Client {
   @Override
   public void join(String grupoId, String user) throws IOException {
     try {
-      Thread.sleep(1500);
+      Thread.sleep(500);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
@@ -41,7 +41,7 @@ public class FakeClient extends Client {
   @Override
   public void leave(String grupoId, String user) throws IOException {
     try {
-      Thread.sleep(1500);
+      Thread.sleep(500);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
@@ -50,7 +50,7 @@ public class FakeClient extends Client {
   @Override
   public void create(String grupoId, String groupName, String user) throws IOException {
     try {
-      Thread.sleep(1500);
+      Thread.sleep(500);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }

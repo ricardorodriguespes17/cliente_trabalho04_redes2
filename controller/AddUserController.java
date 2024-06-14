@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.App;
@@ -20,6 +21,8 @@ public class AddUserController implements Initializable {
   TextField inputIp, inputName;
   @FXML
   Button saveButton;
+  @FXML
+  Label errorLabel;
 
   public static String userIp;
   private App app;
@@ -32,11 +35,43 @@ public class AddUserController implements Initializable {
     if (ip.equals("") || name.equals(""))
       return;
 
+    if (!ipValidation(ip)) {
+      errorLabel.setText("IP inválido");
+      errorLabel.getStyleClass().add("active");
+      return;
+    }
+
+    errorLabel.getStyleClass().remove("active");
+
     User user = new User(ip, name);
     app.addUser(user);
     goBack();
   }
 
+  private boolean ipValidation(String value) {
+    System.out.println(value);
+
+    boolean result = true;
+    String[] valueSplited = value.split("\\.");
+
+    if (valueSplited.length != 4)
+      return false;
+
+    try {
+      for (String split : valueSplited) {
+        int number = Integer.parseInt(split);
+        if (number < 0 || number > 256) {
+          return false;
+        }
+      }
+    } catch (Exception e) {
+      return false;
+    }
+
+    return result;
+  }
+
+  @FXML
   private void goBack() {
     if (ChatController.chatId == null) {
       try {

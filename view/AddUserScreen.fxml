@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.SVGPath?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddUserController">
    <stylesheets>
       <URL value="@css/common.css" />
@@ -19,7 +18,7 @@
    <top>
       <HBox styleClass="header" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false">
+            <Button mnemonicParsing="false" onAction="#goBack">
                <graphic>
                   <SVGPath content="M15.293 3.293 6.586 12l8.707 8.707 1.414-1.414L9.414 12l7.293-7.293-1.414-1.414z" />
                </graphic>
@@ -42,6 +41,7 @@
                <children>
                   <Label text="IP do usuário" />
                   <TextField fx:id="inputIp" />
+                  <Label fx:id="errorLabel" styleClass="errorLabel" text="ue" />
                </children>
             </VBox>
             <VBox>
