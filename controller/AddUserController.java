@@ -43,8 +43,15 @@ public class AddUserController implements Initializable {
 
     errorLabel.getStyleClass().remove("active");
 
-    User user = new User(ip, name);
-    app.addUser(user);
+    User user = app.getUserByIp(ip);
+
+    if(user == null) {
+      user = new User(ip, name);
+      app.addUser(user);
+    } else {
+      //TODO - update user
+    }
+
     goBack();
   }
 
