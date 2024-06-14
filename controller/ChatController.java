@@ -256,6 +256,11 @@ public class ChatController implements Initializable {
       parent.getStyleClass().add("selfMessageBox");
       hbox.getChildren().add(0, messageTimeLabel);
     } else if (userIp.equals(App.SERVER_IP)) {
+      for(User user : app.getUsers()) {
+        String contactMessage = message.getText().replace(user.getUserIp(), user.getName());
+        messageLabel = new Label(contactMessage);
+      }
+
       parent.getStyleClass().add("serverMessageBox");
     } else {
       User messageUser = app.getUserByIp(userIp);
