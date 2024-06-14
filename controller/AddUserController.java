@@ -101,6 +101,12 @@ public class AddUserController implements Initializable {
     app = App.getInstance();
 
     if (userIp != null) {
+      User user = app.getUserByIp(userIp);
+
+      if (user != null) {
+        inputName.setText(user.getName());
+      }
+
       inputIp.setText(userIp);
       inputIp.setDisable(true);
       inputIp.setEditable(false);

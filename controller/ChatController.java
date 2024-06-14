@@ -217,6 +217,17 @@ public class ChatController implements Initializable {
     }
   }
 
+  private void openAddUserScreen() {
+    try {
+      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/AddUserScreen.fxml"));
+      Parent mainScreen = fxmlLoader.load();
+      Stage stage = (Stage) scrollMainBox.getScene().getWindow();
+      stage.setScene(new Scene(mainScreen));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
   private HBox createMessageBox(Message message, boolean selected) {
     HBox parent = new HBox();
     VBox vbox = new VBox();
@@ -256,9 +267,16 @@ public class ChatController implements Initializable {
         username = userIp;
       }
 
-      parent.getStyleClass().add("otherMessageBox");
       Label userNameLabel = new Label(username);
+
+      parent.getStyleClass().add("otherMessageBox");
       userNameLabel.getStyleClass().add("messageUserName");
+
+      userNameLabel.setOnMouseClicked(event -> {
+        AddUserController.userIp = userIp;
+        openAddUserScreen();
+      });
+
       vbox.getChildren().add(userNameLabel);
       hbox.getChildren().add(messageTimeLabel);
     }
@@ -317,7 +335,7 @@ public class ChatController implements Initializable {
 
     chat.getMessages().addListener((message) -> {
       Platform.runLater(() -> {
-        if(ChatController.chatId != null) {
+        if (ChatController.chatId != null) {
           renderMessages(null);
         }
       });
@@ -325,7 +343,7 @@ public class ChatController implements Initializable {
 
     chat.getChatNameProperty().addListener((chatName) -> {
       Platform.runLater(() -> {
-        if(ChatController.chatId != null) {
+        if (ChatController.chatId != null) {
           chatNameLabel.setText(chat.getChatName());
         }
       });
