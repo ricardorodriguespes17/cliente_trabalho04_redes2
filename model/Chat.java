@@ -106,12 +106,13 @@ public class Chat implements Comparable<Chat> {
     return message;
   }
 
-  public int getNumberOfMessagesUnread(String userId) {
+  public int getNumberOfMessagesUnread(String userIp) {
     int count = 0;
 
     for (Message message : messages) {
       boolean notIsServer = !message.getUserIp().equals(App.SERVER_IP);
-      boolean notIsSelf = !message.getUserIp().equals(userId);
+      boolean notIsSelf = !message.getUserIp().equals(userIp);
+
       if (!message.isRead() && notIsServer && notIsSelf) {
         count++;
       }
