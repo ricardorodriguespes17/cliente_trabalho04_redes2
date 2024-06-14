@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.App;
+import model.Chat;
 
 public class JoinChatController implements Initializable {
 
@@ -50,6 +51,8 @@ public class JoinChatController implements Initializable {
           errorLabel = new Label(app.getError());
         } else {
           ChatController.chatId = chatId;
+          Chat chat = new Chat(chatId, "Sem nome", null);
+          app.addChat(chat);
           goToNewChat();
         }
       }

@@ -12,8 +12,8 @@ import javafx.beans.property.SimpleBooleanProperty;
 
 public class App {
   private static App instance;
-  public static String SERVER_IP = "192.168.1.11";
-  public static String LOCAL_IP = null;
+  public static String SERVER_IP = "127.0.0.1";
+  public static String LOCAL_IP = "127.0.0.1";
   private List<Chat> chats;
   private List<User> users;
   private Client tcpClient;
@@ -25,7 +25,17 @@ public class App {
     error = null;
     chats = new ArrayList<>();
     users = new ArrayList<>();
-    tcpClient = Client.createClient(this, "TCP", SERVER_IP, 6789);
+    SERVER_IP = getVariableServerIP();
+    String mode = getVariableMode();
+    
+    System.out.println("> IP do Servidor: " + SERVER_IP);
+    System.out.println("> Modo: " + mode);
+    
+    if(mode != null && mode.equals("TEST")) {
+      tcpClient = Client.createClient(this, mode, SERVER_IP, 6789);
+    } else {
+      tcpClient = Client.createClient(this, "TCP", SERVER_IP, 6789);
+    }
     startClient();
   }
 
@@ -34,6 +44,18 @@ public class App {
       instance = new App();
     }
     return instance;
+  }
+
+  private String getVariableServerIP() {
+    ReadFile readFile = new ReadFile();
+
+    return readFile.getVariable("SERVER_IP");
+  }
+
+  private String getVariableMode() {
+    ReadFile readFile = new ReadFile();
+
+    return readFile.getVariable("MODE");
   }
 
   public void startClient() {
@@ -100,8 +122,6 @@ public class App {
           setLoading(false);
         });
       }
-
-      System.out.println("> Join enviado com sucesso");
     }).start();
   }
 
@@ -117,6 +137,26 @@ public class App {
         return;
       } finally {
         System.out.println("> leave enviado com sucesso");
+
+        Platform.runLater(() -> {
+          setLoading(false);
+        });
+      }
+    }).start();
+  }
+
+  public void create(String chatId, String chatName) {
+    System.out.println("> Enviando create para o server");
+    setLoading(true);
+
+    new Thread(() -> {
+      try {
+        tcpClient.create(chatId, chatName, App.LOCAL_IP);
+      } catch (IOException e) {
+        System.out.println("> Erro: Falha ao enviar um create para servidor");
+        return;
+      } finally {
+        System.out.println("> create enviado com sucesso");
 
         Platform.runLater(() -> {
           setLoading(false);
@@ -222,6 +262,10 @@ public class App {
 
   public void setError(String error) {
     this.error = error;
+  }
+
+  public static void setInstance(App instance) {
+    App.instance = instance;
   }
 
 }

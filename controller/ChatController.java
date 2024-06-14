@@ -205,6 +205,8 @@ public class ChatController implements Initializable {
 
   @FXML
   private void goToMainScreen() {
+    ChatController.chatId = null;
+
     try {
       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/MainScreen.fxml"));
       Parent mainScreen = fxmlLoader.load();
@@ -306,10 +308,27 @@ public class ChatController implements Initializable {
     scrollMainBox.setFitToWidth(true);
     app = App.getInstance();
     chat = app.getChatById(chatId);
-    chatNameLabel.setText(chat.getChatName());
+    if (chat != null) {
+      chatNameLabel.setText(chat.getChatName());
+    } else {
+      goToMainScreen();
+    }
     renderMessages(null);
+
     chat.getMessages().addListener((message) -> {
-      renderMessages(null);
+      Platform.runLater(() -> {
+        if(ChatController.chatId != null) {
+          renderMessages(null);
+        }
+      });
+    });
+
+    chat.getChatNameProperty().addListener((chatName) -> {
+      Platform.runLater(() -> {
+        if(ChatController.chatId != null) {
+          chatNameLabel.setText(chat.getChatName());
+        }
+      });
     });
   }
 

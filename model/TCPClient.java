@@ -1,8 +1,12 @@
 package model;
 
-import java.net.*;
-import java.time.LocalDateTime;
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+import model.util.DataManager;
 
 public class TCPClient extends Client {
   private Socket socket;
@@ -23,35 +27,30 @@ public class TCPClient extends Client {
 
   @Override
   public void send(String groupId, String user, String data) throws IOException {
-    if (socket.isConnected()) {
-      String message = new String("send/" + groupId + "/" + user + "/" + data);
-      output.writeObject(message);
-      output.flush();
-    } else {
-      System.out.println("> Não conectado");
-    }
+    String message = new String("send/" + groupId + "/" + user + "/" + data);
+    output.writeObject(message);
+    output.flush();
   }
 
   @Override
   public void join(String groupId, String user) throws IOException {
-    if (socket.isConnected()) {
-      String message = new String("join/" + groupId + "/" + user);
-      output.writeObject(message);
-      output.flush();
-    } else {
-      System.out.println("> Não conectado");
-    }
+    String message = new String("join/" + groupId + "/" + user);
+    output.writeObject(message);
+    output.flush();
   }
 
   @Override
   public void leave(String groupId, String user) throws IOException {
-    if (socket.isConnected()) {
-      String message = new String("leave/" + groupId + "/" + user);
-      output.writeObject(message);
-      output.flush();
-    } else {
-      System.out.println("> Não conectado");
-    }
+    String message = new String("leave/" + groupId + "/" + user);
+    output.writeObject(message);
+    output.flush();
+  }
+
+  @Override
+  public void create(String groupId, String groupName, String user) throws IOException {
+    String message = new String("create/" + groupId + "/" + groupName + "/" + user);
+    output.writeObject(message);
+    output.flush();
   }
 
   @Override
@@ -59,44 +58,34 @@ public class TCPClient extends Client {
     new Thread(() -> {
       try {
         input = new ObjectInputStream(socket.getInputStream());
-        Object receivedObject;
+        Object receivedObject = null;
         do {
+          String data = "";
           receivedObject = input.readObject();
-          String data = (String) receivedObject;
+          data = (String) receivedObject;
           System.out.println("> Servidor: " + data);
           sanitizeReceivedData(data);
         } while (receivedObject != null);
-
       } catch (IOException | ClassNotFoundException e) {
+        System.out.println("> Erro: não foi possível ler a mensagem do servidor");
         e.printStackTrace();
       }
     }).start();
   }
 
-  public void sanitizeReceivedData(String data) throws IOException {
+  public void sanitizeReceivedData(String data) {
     String[] dataSplited = data.split("/");
     String type = dataSplited[0];
-    String chatId = dataSplited[1];
-    String userId = dataSplited[2];
-
-    Chat chat = app.getChatById(chatId);
-    LocalDateTime localDateTime = LocalDateTime.now();
 
     switch (type) {
       case "send":
-        String messageText = "";
-        for (int i = 3; i < dataSplited.length; i++) {
-          messageText += dataSplited[i] + " ";
-        }
-        messageText = messageText.trim();
-        System.out.println("> " + userId + " enviou " + messageText);
-
-        Message message = new Message(messageText, userId, localDateTime);
-        message.setSend(true);
-        chat.addMessage(message);
+        DataManager.receiveSend(dataSplited[1], dataSplited[2], dataSplited[3]);
+        break;
+      case "chat":
+        DataManager.receiveChat(dataSplited[1], dataSplited[2]);
         break;
       case "error":
-        System.out.println("> Servidor: " + data);
+        DataManager.receiveError(dataSplited[1]);
         break;
       default:
         return;

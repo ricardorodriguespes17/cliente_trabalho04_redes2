@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -210,6 +211,8 @@ public class MainController implements Initializable {
 
         if (messageUser != null) {
           userName = messageUser.getName();
+        } else {
+          userName = lastMessage.getUserIp();
         }
 
         if (lastMessage.getUserIp().equals(App.LOCAL_IP)) {
@@ -245,6 +248,20 @@ public class MainController implements Initializable {
     scrollMainBox.setFitToWidth(true);
     app = App.getInstance();
     renderChats(null);
+    
+    for(Chat chat : app.getChats()) {
+      chat.getMessages().addListener((message) -> {
+        Platform.runLater(() -> {
+          renderChats(null);
+        });
+      });
+
+      chat.getChatNameProperty().addListener((chatName) -> {
+        Platform.runLater(() -> {
+          renderChats(null);
+        });
+      });
+    }
   }
 
 }
