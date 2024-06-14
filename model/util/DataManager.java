@@ -1,3 +1,13 @@
+/* ***************************************************************
+* Autor............: Ricardo Rodrigues Neto
+* Matricula........: 201710560
+* Inicio...........: 13/06/2024
+* Ultima alteracao.: 13/06/2024
+* Nome.............: DataManager
+* Funcao...........: Trata os dados recebidos pelo cliente e
+realiza a construção/atualização dos chats.
+*************************************************************** */
+
 package model.util;
 
 import java.time.LocalDateTime;

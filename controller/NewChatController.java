@@ -1,3 +1,12 @@
+/* ***************************************************************
+* Autor............: Ricardo Rodrigues Neto
+* Matricula........: 201710560
+* Inicio...........: 09/06/2024
+* Ultima alteracao.: 13/06/2024
+* Nome.............: NewChatController
+* Funcao...........: Controla a tela criação de chat.
+*************************************************************** */
+
 package controller;
 
 import java.net.URL;

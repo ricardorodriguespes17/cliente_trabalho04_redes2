@@ -1,3 +1,12 @@
+/* ***************************************************************
+* Autor............: Ricardo Rodrigues Neto
+* Matricula........: 201710560
+* Inicio...........: 13/06/2024
+* Ultima alteracao.: 13/06/2024
+* Nome.............: ChatController
+* Funcao...........: Controla a tela de listagem de contatos.
+*************************************************************** */
+
 package controller;
 
 import java.net.URL;

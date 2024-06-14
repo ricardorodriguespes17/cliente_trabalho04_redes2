@@ -1,3 +1,12 @@
+/* ***************************************************************
+* Autor............: Ricardo Rodrigues Neto
+* Matricula........: 201710560
+* Inicio...........: 07/06/2024
+* Ultima alteracao.: 13/06/2024
+* Nome.............: TCPClient
+* Funcao...........: Monta um cliente usando o protocolo TCP.
+*************************************************************** */
+
 package model;
 
 import java.io.IOException;

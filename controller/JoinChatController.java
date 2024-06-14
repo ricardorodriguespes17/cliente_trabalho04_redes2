@@ -1,3 +1,12 @@
+/* ***************************************************************
+* Autor............: Ricardo Rodrigues Neto
+* Matricula........: 201710560
+* Inicio...........: 12/06/2024
+* Ultima alteracao.: 13/06/2024
+* Nome.............: JoinChatController
+* Funcao...........: Controla a tela de entrar em um chat.
+*************************************************************** */
+
 package controller;
 
 import java.net.URL;

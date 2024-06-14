@@ -1,3 +1,12 @@
+/* ***************************************************************
+* Autor............: Ricardo Rodrigues Neto
+* Matricula........: 201710560
+* Inicio...........: 10/06/2024
+* Ultima alteracao.: 13/06/2024
+* Nome.............: Client
+* Funcao...........: Gerencia os dados de um cliente.
+*************************************************************** */
+
 package model;
 
 import java.io.IOException;

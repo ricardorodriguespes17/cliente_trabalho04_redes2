@@ -1,3 +1,12 @@
+/* ***************************************************************
+* Autor............: Ricardo Rodrigues Neto
+* Matricula........: 201710560
+* Inicio...........: 10/06/2024
+* Ultima alteracao.: 13/06/2024
+* Nome.............: Message
+* Funcao...........: Gerencia os dados de mensagens dos chats.
+*************************************************************** */
+
 package model;
 
 import java.time.LocalDate;

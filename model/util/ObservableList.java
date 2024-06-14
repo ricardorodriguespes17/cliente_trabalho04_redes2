@@ -1,3 +1,13 @@
+/* ***************************************************************
+* Autor............: Ricardo Rodrigues Neto
+* Matricula........: 201710560
+* Inicio...........: 10/06/2024
+* Ultima alteracao.: 10/06/2024
+* Nome.............: ObservableList
+* Funcao...........: Permite que crie listas que podem ser
+observadas para que atualize algo na aplicação.
+*************************************************************** */
+
 package model.util;
 
 import java.util.ArrayList;

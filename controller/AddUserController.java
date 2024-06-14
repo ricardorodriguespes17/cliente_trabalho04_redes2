@@ -1,3 +1,13 @@
+/* ***************************************************************
+* Autor............: Ricardo Rodrigues Neto
+* Matricula........: 201710560
+* Inicio...........: 13/06/2024
+* Ultima alteracao.: 13/06/2024
+* Nome.............: AddUserController
+* Funcao...........: Controla a tela de adicionar ou editar 
+contatos/usuários.
+*************************************************************** */
+
 package controller;
 
 import java.net.URL;
