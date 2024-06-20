@@ -19,8 +19,8 @@ import model.Message;
 public class DataManager {
   private static App app = App.getInstance();
 
-  public static void receiveSend(String chatId, String userIp, String messageText) {
-    Chat chat = app.getChatById(chatId);
+  public static void receiveSend(String chatName, String userIp, String messageText) {
+    Chat chat = app.getChatByName(chatName);
 
     if(chat == null)
       return;
@@ -32,8 +32,8 @@ public class DataManager {
     System.out.println("> " + userIp + " enviou " + messageText);
   }
 
-  public static void receiveChat(String chatId, String chatName) {
-    Chat chat = app.getChatById(chatId);
+  public static void receiveChat(String chatName) {
+    Chat chat = app.getChatByName(chatName);
 
     if(chat == null)
       return;

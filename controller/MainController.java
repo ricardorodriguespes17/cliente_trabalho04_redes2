@@ -2,7 +2,7 @@
 * Autor............: Ricardo Rodrigues Neto
 * Matricula........: 201710560
 * Inicio...........: 07/06/2024
-* Ultima alteracao.: 11/06/2024
+* Ultima alteracao.: 20/06/2024
 * Nome.............: Controller
 * Funcao...........: Controla a tela principal da aplicação.
 *************************************************************** */
@@ -121,7 +121,7 @@ public class MainController implements Initializable {
     });
   }
 
-  private HBox createChatBox(String chatId, String chatName, String lastMessage, String lastMessageTime,
+  private HBox createChatBox(String chatName, String lastMessage, String lastMessageTime,
       int lastMessagesCount) {
     HBox hbox = new HBox();
     VBox vbox1 = new VBox();
@@ -147,7 +147,7 @@ public class MainController implements Initializable {
     HBox.setHgrow(vbox1, Priority.ALWAYS);
     hbox.getChildren().addAll(vbox1, vbox2);
     hbox.setOnMouseClicked(this::openChat);
-    hbox.setId(chatId);
+    hbox.setId(chatName);
 
     applyTransitionEffect(hbox);
 
@@ -174,7 +174,7 @@ public class MainController implements Initializable {
   private void openChat(MouseEvent event) {
     HBox chatBox = (HBox) event.getSource();
 
-    ChatController.chatId = chatBox.getId();
+    ChatController.chatName = chatBox.getId();
 
     try {
       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/ChatScreen.fxml"));
@@ -224,7 +224,7 @@ public class MainController implements Initializable {
         textLastMessage = userName + ": " + lastMessage.getText();
       }
 
-      HBox hbox = createChatBox(chat.getChatId(), chat.getChatName(), textLastMessage, messageTime, unreadsCount);
+      HBox hbox = createChatBox(chat.getChatName(), textLastMessage, messageTime, unreadsCount);
       mainBox.getChildren().add(hbox);
     }
   }

@@ -2,7 +2,7 @@
 * Autor............: Ricardo Rodrigues Neto
 * Matricula........: 201710560
 * Inicio...........: 12/06/2024
-* Ultima alteracao.: 14/06/2024
+* Ultima alteracao.: 20/06/2024
 * Nome.............: FakeClient
 * Funcao...........: Monta um cliente falso, apenas para testes.
 *************************************************************** */
@@ -51,15 +51,6 @@ public class FakeClient extends Client {
 
   @Override
   public void leave(String grupoId, String user) throws IOException {
-    try {
-      Thread.sleep(500);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-  }
-
-  @Override
-  public void create(String grupoId, String groupName, String user) throws IOException {
     try {
       Thread.sleep(500);
     } catch (InterruptedException e) {

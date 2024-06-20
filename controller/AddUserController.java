@@ -2,7 +2,7 @@
 * Autor............: Ricardo Rodrigues Neto
 * Matricula........: 201710560
 * Inicio...........: 13/06/2024
-* Ultima alteracao.: 13/06/2024
+* Ultima alteracao.: 20/06/2024
 * Nome.............: AddUserController
 * Funcao...........: Controla a tela de adicionar ou editar 
 contatos/usuários.
@@ -90,7 +90,7 @@ public class AddUserController implements Initializable {
 
   @FXML
   private void goBack() {
-    if (ChatController.chatId == null) {
+    if (ChatController.chatName == null) {
       try {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/ContactsScreen.fxml"));
         Parent newScreen = fxmlLoader.load();

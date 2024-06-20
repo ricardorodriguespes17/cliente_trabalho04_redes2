@@ -97,7 +97,7 @@ public class App {
 
     new Thread(() -> {
       try {
-        udpClient.send(chat.getChatId(), App.LOCAL_IP, message.getText());
+        udpClient.send(chat.getChatName(), App.LOCAL_IP, message.getText());
       } catch (IOException e) {
         e.printStackTrace();
         System.out.println("> Erro: Falha ao enviar um send para servidor");
@@ -115,13 +115,13 @@ public class App {
     }).start();
   }
 
-  public void join(String chatId) {
+  public void join(String chatName) {
     System.out.println("> Enviando join para o server");
     setLoading(true);
 
     new Thread(() -> {
       try {
-        tcpClient.join(chatId, App.LOCAL_IP);
+        tcpClient.join(chatName, App.LOCAL_IP);
       } catch (IOException e) {
         System.out.println("> Erro: Falha ao enviar um join para servidor");
         setError("Código inválido");
@@ -142,7 +142,7 @@ public class App {
 
     new Thread(() -> {
       try {
-        tcpClient.leave(chat.getChatId(), App.LOCAL_IP);
+        tcpClient.leave(chat.getChatName(), App.LOCAL_IP);
       } catch (IOException e) {
         System.out.println("> Erro: Falha ao enviar um leave para servidor");
         return;
@@ -156,31 +156,11 @@ public class App {
     }).start();
   }
 
-  public void create(String chatId, String chatName) {
-    System.out.println("> Enviando create para o server");
-    setLoading(true);
-
-    new Thread(() -> {
-      try {
-        tcpClient.create(chatId, chatName, App.LOCAL_IP);
-      } catch (IOException e) {
-        System.out.println("> Erro: Falha ao enviar um create para servidor");
-        return;
-      } finally {
-        System.out.println("> create enviado com sucesso");
-
-        Platform.runLater(() -> {
-          setLoading(false);
-        });
-      }
-    }).start();
-  }
-
   // Gets e Sets
 
-  public Chat getChatById(String chatId) {
+  public Chat getChatByName(String chatName) {
     for (Chat chat : chats) {
-      if (chat.getChatId().equals(chatId)) {
+      if (chat.getChatName().equals(chatName)) {
         return chat;
       }
     }

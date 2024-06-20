@@ -2,7 +2,7 @@
 * Autor............: Ricardo Rodrigues Neto
 * Matricula........: 201710560
 * Inicio...........: 07/06/2024
-* Ultima alteracao.: 13/06/2024
+* Ultima alteracao.: 20/06/2024
 * Nome.............: ChatController
 * Funcao...........: Controla a tela do chat.
 *************************************************************** */
@@ -59,7 +59,7 @@ public class ChatController implements Initializable {
   HBox headerBox;
 
   private App app;
-  public static String chatId = null;
+  public static String chatName = null;
   private Chat chat;
   private boolean menuIsOpen = false;
   private TextField inputSearch;
@@ -172,14 +172,8 @@ public class ChatController implements Initializable {
     alert.setHeaderText(chat.getChatName());
 
     String details = "";
-    String description = chat.getDescription();
 
-    if (description == null) {
-      description = "(Vazio)";
-    }
-
-    details += "ID:\n" + chatId + "\n\n";
-    details += "Descrição:\n" + description + "\n\n";
+    details += "ID:\n" + chatName + "\n\n";
     details += "Membros:\n" + "Marlos, Ricardo, Gil, Adryellen, Vitor, Ana Beatriz";
 
     alert.setContentText(details);
@@ -214,7 +208,7 @@ public class ChatController implements Initializable {
 
   @FXML
   private void goToMainScreen() {
-    ChatController.chatId = null;
+    ChatController.chatName = null;
 
     try {
       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/MainScreen.fxml"));
@@ -339,7 +333,7 @@ public class ChatController implements Initializable {
   public void initialize(URL location, ResourceBundle resources) {
     scrollMainBox.setFitToWidth(true);
     app = App.getInstance();
-    chat = app.getChatById(chatId);
+    chat = app.getChatByName(chatName);
     if (chat != null) {
       chatNameLabel.setText(chat.getChatName());
     } else {
@@ -349,7 +343,7 @@ public class ChatController implements Initializable {
 
     chat.getMessages().addListener((message) -> {
       Platform.runLater(() -> {
-        if (ChatController.chatId != null) {
+        if (ChatController.chatName != null) {
           renderMessages(null);
         }
       });
@@ -357,7 +351,7 @@ public class ChatController implements Initializable {
 
     chat.getChatNameProperty().addListener((chatName) -> {
       Platform.runLater(() -> {
-        if (ChatController.chatId != null) {
+        if (ChatController.chatName != null) {
           chatNameLabel.setText(chat.getChatName());
         }
       });

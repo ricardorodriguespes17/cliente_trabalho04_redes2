@@ -2,69 +2,27 @@
 * Autor............: Ricardo Rodrigues Neto
 * Matricula........: 201710560
 * Inicio...........: 10/06/2024
-* Ultima alteracao.: 13/06/2024
+* Ultima alteracao.: 20/06/2024
 * Nome.............: Chat
 * Funcao...........: Gerencia os dados de um grupo/chat
 *************************************************************** */
 
 package model;
 
-import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.Random;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import model.util.ObservableList;
 
 public class Chat implements Comparable<Chat> {
-  private String chatId;
   private StringProperty chatName;
-  private String description;
   private ObservableList<Message> messages;
-  private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  private static final Random RANDOM = new SecureRandom();
-
-  public Chat(String chatId, String chatName, String description) {
-    this.chatId = chatId;
-    this.chatName = new SimpleStringProperty(chatName);
-    this.description = description;
-    messages = new ObservableList<>();
-  }
 
   public Chat(String chatName) {
-    this.chatId = generateRandomString(5);
     this.chatName = new SimpleStringProperty(chatName);
     messages = new ObservableList<>();
-  }
-
-  public Chat(String chatName, String description) {
-    this.chatId = generateRandomString(5);
-    this.chatName = new SimpleStringProperty(chatName);
-    messages = new ObservableList<>();
-    if (description == null || description.equals("")) {
-      this.description = null;
-    }
-  }
-
-  public static String generateRandomString(int length) {
-    StringBuilder sb = new StringBuilder(length);
-
-    for (int i = 0; i < length; i++) {
-      int index = RANDOM.nextInt(CHARACTERS.length());
-      sb.append(CHARACTERS.charAt(index));
-    }
-
-    return sb.toString();
-  }
-
-  public String getChatId() {
-    return chatId;
-  }
-
-  public void setChatId(String chatId) {
-    this.chatId = chatId;
   }
 
   public StringProperty getChatNameProperty() {
@@ -142,14 +100,6 @@ public class Chat implements Comparable<Chat> {
   public void setMessages(ObservableList<Message> messages) {
     Collections.sort(messages);
     this.messages = messages;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
   }
 
   @Override

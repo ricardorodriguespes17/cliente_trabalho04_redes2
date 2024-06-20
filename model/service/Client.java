@@ -2,7 +2,7 @@
 * Autor............: Ricardo Rodrigues Neto
 * Matricula........: 201710560
 * Inicio...........: 10/06/2024
-* Ultima alteracao.: 13/06/2024
+* Ultima alteracao.: 20/06/2024
 * Nome.............: Client
 * Funcao...........: Gerencia os dados de um cliente.
 *************************************************************** */
@@ -32,8 +32,6 @@ public abstract class Client {
   public abstract void join(String grupoId, String user) throws IOException;
 
   public abstract void leave(String grupoId, String user) throws IOException;
-
-  public abstract void create(String grupoId, String grupoName, String user) throws IOException;
 
   public abstract void receive() throws IOException;
 

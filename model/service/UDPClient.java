@@ -2,7 +2,7 @@
 * Autor............: Ricardo Rodrigues Neto
 * Matricula........: 201710560
 * Inicio...........: 14/06/2024
-* Ultima alteracao.: 14/06/2024
+* Ultima alteracao.: 20/06/2024
 * Nome.............: UDPClient
 * Funcao...........: Monta um cliente usando o protocolo UDP.
 *************************************************************** */
@@ -47,11 +47,6 @@ public class UDPClient extends Client {
   @Override
   public void leave(String grupoId, String user) throws IOException {
     throw new UnsupportedOperationException("Unimplemented method 'leave'");
-  }
-
-  @Override
-  public void create(String grupoId, String grupoName, String user) throws IOException {
-    throw new UnsupportedOperationException("Unimplemented method 'create'");
   }
 
   @Override

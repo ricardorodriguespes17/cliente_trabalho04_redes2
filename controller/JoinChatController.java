@@ -2,7 +2,7 @@
 * Autor............: Ricardo Rodrigues Neto
 * Matricula........: 201710560
 * Inicio...........: 12/06/2024
-* Ultima alteracao.: 13/06/2024
+* Ultima alteracao.: 20/06/2024
 * Nome.............: JoinChatController
 * Funcao...........: Controla a tela de entrar em um chat.
 *************************************************************** */
@@ -42,12 +42,12 @@ public class JoinChatController implements Initializable {
     if (app.isLoading())
       return;
 
-    String chatId = inputCode.getText().trim();
+    String chatName = inputCode.getText().trim();
 
-    if (chatId.equals(""))
+    if (chatName.equals(""))
       return;
 
-    app.join(chatId);
+    app.join(chatName);
 
     buttonJoin.setText("Entrando...");
     buttonJoin.setDisable(true);
@@ -59,8 +59,8 @@ public class JoinChatController implements Initializable {
         if (app.getError() != null) {
           errorLabel = new Label(app.getError());
         } else {
-          ChatController.chatId = chatId;
-          Chat chat = new Chat(chatId, "Sem nome", null);
+          ChatController.chatName = chatName;
+          Chat chat = new Chat(chatName);
           app.addChat(chat);
           goToNewChat();
         }

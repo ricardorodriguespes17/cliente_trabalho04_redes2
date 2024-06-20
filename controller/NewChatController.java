@@ -2,7 +2,7 @@
 * Autor............: Ricardo Rodrigues Neto
 * Matricula........: 201710560
 * Inicio...........: 09/06/2024
-* Ultima alteracao.: 13/06/2024
+* Ultima alteracao.: 20/06/2024
 * Nome.............: NewChatController
 * Funcao...........: Controla a tela criação de chat.
 *************************************************************** */
@@ -43,15 +43,14 @@ public class NewChatController implements Initializable {
       return;
 
     String chatName = inputChatName.getText().trim();
-    String description = inputDescription.getText().trim();
 
     if (chatName.equals(""))
       return;
 
-    Chat chat = new Chat(chatName, description);
-    ChatController.chatId = chat.getChatId();
+    Chat chat = new Chat(chatName);
+    ChatController.chatName = chat.getChatName();
     app.addChat(chat);
-    app.create(chat.getChatId(), chatName);
+    app.join(chat.getChatName());
 
     buttonCreate.setText("Criando...");
     buttonCreate.setDisable(true);

@@ -2,7 +2,7 @@
 * Autor............: Ricardo Rodrigues Neto
 * Matricula........: 201710560
 * Inicio...........: 07/06/2024
-* Ultima alteracao.: 14/06/2024
+* Ultima alteracao.: 20/06/2024
 * Nome.............: TCPClient
 * Funcao...........: Monta um cliente usando o protocolo TCP.
 *************************************************************** */
@@ -57,13 +57,6 @@ public class TCPClient extends Client {
   }
 
   @Override
-  public void create(String groupId, String groupName, String user) throws IOException {
-    String message = new String("create/" + groupId + "/" + groupName + "/" + user);
-    output.writeObject(message);
-    output.flush();
-  }
-
-  @Override
   public void receive() throws IOException {
     new Thread(() -> {
       try {
@@ -92,7 +85,7 @@ public class TCPClient extends Client {
         DataManager.receiveSend(dataSplited[1], dataSplited[2], dataSplited[3]);
         break;
       case "chat":
-        DataManager.receiveChat(dataSplited[1], dataSplited[2]);
+        DataManager.receiveChat(dataSplited[1]);
         break;
       case "error":
         DataManager.receiveError(dataSplited[1]);
