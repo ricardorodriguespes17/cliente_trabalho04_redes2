@@ -33,9 +33,9 @@
          <children>
             <VBox>
                <children>
-                  <Label text="Código do grupo" />
+                  <Label text="Nome do grupo" />
                   <TextField fx:id="inputCode" onAction="#onJoin" />
-                  <Label fx:id="errorLabel" styleClass="errorLabel" text="Erro ao criar o grupo" />
+                  <Label fx:id="errorLabel" styleClass="errorLabel" text="Erro ao entrar no grupo" />
                </children>
             </VBox>
          </children>

@@ -54,11 +54,6 @@ public class MainController implements Initializable {
   private TextField inputSearch;
 
   @FXML
-  private void getToCreateChat() {
-    openScreen("../view/NewChatScreen.fxml");
-  }
-
-  @FXML
   private void goToJoinChat() {
     openScreen("../view/JoinChatScreen.fxml");
   }
@@ -231,7 +226,7 @@ public class MainController implements Initializable {
 
   private void renderEmptyChats() {
     Label label1 = new Label("Está vazio por aqui");
-    Label label2 = new Label("Crie ou entre em um grupo");
+    Label label2 = new Label("Entre em um grupo");
     SVGPath svgIcon = new SVGPath();
 
     svgIcon.setContent(

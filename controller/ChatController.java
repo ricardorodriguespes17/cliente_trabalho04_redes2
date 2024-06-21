@@ -82,6 +82,7 @@ public class ChatController implements Initializable {
     };
     message.isSendProperty().addListener(messageSendListener);
     chat.addMessage(message);
+    System.out.println(message.getText());
     app.send(chat, message);
     inputMessage.setText("");
   }
@@ -173,7 +174,6 @@ public class ChatController implements Initializable {
 
     String details = "";
 
-    details += "ID:\n" + chatName + "\n\n";
     details += "Membros:\n" + "Marlos, Ricardo, Gil, Adryellen, Vitor, Ana Beatriz";
 
     alert.setContentText(details);
