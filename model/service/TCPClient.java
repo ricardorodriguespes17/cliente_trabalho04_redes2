@@ -31,8 +31,11 @@ public class TCPClient extends Client {
   public void connect() throws UnknownHostException, IOException {
     socket = new Socket(host, port);
     output = new ObjectOutputStream(socket.getOutputStream());
-    App.LOCAL_IP = socket.getLocalAddress().getHostAddress();
-    System.out.println("> Conectado ao servidor - IP: " + App.LOCAL_IP);
+
+    String localIp = socket.getLocalAddress().getHostAddress();
+    app.setLocalIp(localIp);
+    
+    System.out.println("> Conectado ao servidor - IP: " + localIp);
   }
 
   @Override

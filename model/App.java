@@ -21,8 +21,8 @@ import model.service.Client;
 
 public class App {
   private static App instance;
-  public static String SERVER_IP = "127.0.0.1";
-  public static String LOCAL_IP = "127.0.0.1";
+  private String serverIp = "127.0.0.1";
+  private String localIp = "127.0.0.1";
   private List<Chat> chats;
   private List<User> users;
   private Client tcpClient;
@@ -35,20 +35,6 @@ public class App {
     error = null;
     chats = new ArrayList<>();
     users = new ArrayList<>();
-    SERVER_IP = getVariableServerIP();
-    String mode = getVariableMode();
-
-    System.out.println("> IP do Servidor: " + SERVER_IP);
-    System.out.println("> Modo: " + mode);
-
-    if (mode != null && mode.equals("TEST")) {
-      tcpClient = Client.createClient(this, mode, SERVER_IP, 6789);
-      udpClient = Client.createClient(this, mode, SERVER_IP, 6790);
-    } else {
-      tcpClient = Client.createClient(this, "TCP", SERVER_IP, 6789);
-      udpClient = Client.createClient(this, "UDP", SERVER_IP, 6790);
-    }
-    startClient();
   }
 
   public static App getInstance() {
@@ -56,6 +42,24 @@ public class App {
       instance = new App();
     }
     return instance;
+  }
+
+  public void createClients(String serverIp) {
+    // serverIp = getVariableServerIP();
+    String mode = getVariableMode();
+
+    System.out.println("> IP do Servidor: " + serverIp);
+    System.out.println("> Modo: " + mode);
+
+    if (mode != null && mode.equals("TEST")) {
+      tcpClient = Client.createClient(this, mode, serverIp, 6789);
+      udpClient = Client.createClient(this, mode, serverIp, 6790);
+    } else {
+      tcpClient = Client.createClient(this, "TCP", serverIp, 6789);
+      udpClient = Client.createClient(this, "UDP", serverIp, 6790);
+    }
+
+    startClient();
   }
 
   private String getVariableServerIP() {
@@ -71,7 +75,7 @@ public class App {
   }
 
   public void startClient() {
-    System.out.println("> Iniciando server");
+    System.out.println("> Conectando ao servidor");
     setLoading(true);
 
     new Thread(() -> {
@@ -79,7 +83,9 @@ public class App {
         tcpClient.connect();
         udpClient.connect();
         tcpClient.receive();
+        setError(null);
       } catch (IOException e) {
+        setError("Houve um problema ao conectar o servidor");
         System.out.println("> Erro: Houve um problema ao conectar o servidor");
         return;
       } finally {
@@ -97,7 +103,7 @@ public class App {
 
     new Thread(() -> {
       try {
-        udpClient.send(chat.getChatName(), App.LOCAL_IP, message.getText());
+        udpClient.send(chat.getChatName(), localIp, message.getText());
       } catch (IOException e) {
         e.printStackTrace();
         System.out.println("> Erro: Falha ao enviar um send para servidor");
@@ -121,7 +127,7 @@ public class App {
 
     new Thread(() -> {
       try {
-        tcpClient.join(chatName, App.LOCAL_IP);
+        tcpClient.join(chatName, localIp);
       } catch (IOException e) {
         System.out.println("> Erro: Falha ao enviar um join para servidor");
         setError("Código inválido");
@@ -142,7 +148,7 @@ public class App {
 
     new Thread(() -> {
       try {
-        tcpClient.leave(chat.getChatName(), App.LOCAL_IP);
+        tcpClient.leave(chat.getChatName(), localIp);
       } catch (IOException e) {
         System.out.println("> Erro: Falha ao enviar um leave para servidor");
         return;
@@ -259,4 +265,28 @@ public class App {
     App.instance = instance;
   }
 
+  public String getServerIp() {
+    return serverIp;
+  }
+
+  public void setServerIp(String serverIp) {
+    this.serverIp = serverIp;
+  }
+
+  public String getLocalIp() {
+    return localIp;
+  }
+
+  public void setLocalIp(String localIp) {
+    this.localIp = localIp;
+  }
+
+  public Client getUdpClient() {
+    return udpClient;
+  }
+
+  public void setUdpClient(Client udpClient) {
+    this.udpClient = udpClient;
+  }
+  
 }

@@ -2,7 +2,7 @@
 * Autor............: Ricardo Rodrigues Neto
 * Matricula........: 201710560
 * Inicio...........: 07/06/2024
-* Ultima alteracao.: 10/06/2024
+* Ultima alteracao.: 21/06/2024
 * Nome.............: Principal
 * Funcao...........: Inicia o programa e a interface grafica.
 *************************************************************** */
@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 public class Principal extends Application {
   @Override
   public void start(Stage stage) throws Exception {
-    Parent root = FXMLLoader.load(getClass().getResource("view/SplashScreen.fxml"));
+    Parent root = FXMLLoader.load(getClass().getResource("view/LoginScreen.fxml"));
     Scene scene = new Scene(root);
     stage.setScene(scene);
     stage.getIcons().add(new Image("view/img/logo.png"));

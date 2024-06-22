@@ -19,6 +19,7 @@ import model.util.ObservableList;
 public class Chat implements Comparable<Chat> {
   private StringProperty chatName;
   private ObservableList<Message> messages;
+  private App app = App.getInstance();
 
   public Chat(String chatName) {
     this.chatName = new SimpleStringProperty(chatName);
@@ -66,7 +67,7 @@ public class Chat implements Comparable<Chat> {
 
     Message message = messages.get(messages.size() - 1);
 
-    if (message.getUserIp().equals(App.SERVER_IP)) {
+    if (message.getUserIp().equals(app.getServerIp())) {
       return null;
     }
 
@@ -77,7 +78,7 @@ public class Chat implements Comparable<Chat> {
     int count = 0;
 
     for (Message message : messages) {
-      boolean notIsServer = !message.getUserIp().equals(App.SERVER_IP);
+      boolean notIsServer = !message.getUserIp().equals(app.getLocalIp());
       boolean notIsSelf = !message.getUserIp().equals(userIp);
 
       if (!message.isRead() && notIsServer && notIsSelf) {

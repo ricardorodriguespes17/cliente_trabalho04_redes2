@@ -75,7 +75,7 @@ public class ChatController implements Initializable {
 
     LocalDateTime currentTime = LocalDateTime.now();
 
-    Message message = new Message(value.trim(), App.LOCAL_IP, currentTime);
+    Message message = new Message(value.trim(), app.getLocalIp(), currentTime);
     messageSendListener = (obs, wasSend, isSend) -> {
       message.isSendProperty().removeListener(messageSendListener);
       renderMessages(null);
@@ -255,10 +255,10 @@ public class ChatController implements Initializable {
       hbox.getChildren().add(button);
     }
 
-    if (userIp.equals(App.LOCAL_IP)) {
+    if (userIp.equals(app.getLocalIp())) {
       parent.getStyleClass().add("selfMessageBox");
       hbox.getChildren().add(0, messageTimeLabel);
-    } else if (userIp.equals(App.SERVER_IP)) {
+    } else if (userIp.equals(app.getServerIp())) {
       for(User user : app.getUsers()) {
         String contactMessage = message.getText().replace(user.getUserIp(), user.getName());
         messageLabel = new Label(contactMessage);

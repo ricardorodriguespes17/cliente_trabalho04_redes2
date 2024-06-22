@@ -28,7 +28,7 @@ public class FakeClient extends Client {
       e.printStackTrace();
     }
 
-    System.out.println("> Conectado ao servidor - IP: " + App.LOCAL_IP);
+    System.out.println("> Conectado ao servidor - IP: " + app.getLocalIp());
   }
 
   @Override

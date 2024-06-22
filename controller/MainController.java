@@ -197,7 +197,7 @@ public class MainController implements Initializable {
 
     for (Chat chat : chats) {
       Message lastMessage = chat.getLastMessage();
-      int unreadsCount = chat.getNumberOfMessagesUnread(App.LOCAL_IP);
+      int unreadsCount = chat.getNumberOfMessagesUnread(app.getLocalIp());
       String userName = "";
       String messageTime = "";
       String textLastMessage = "";
@@ -212,7 +212,7 @@ public class MainController implements Initializable {
           userName = lastMessage.getUserIp();
         }
 
-        if (lastMessage.getUserIp().equals(App.LOCAL_IP)) {
+        if (lastMessage.getUserIp().equals(app.getLocalIp())) {
           userName = "Você";
         }
 

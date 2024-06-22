@@ -1,0 +1,16 @@
+.main {
+  -fx-padding: 10 15 10 15;
+  -fx-spacing: 20;
+}
+
+.main VBox {
+  -fx-spacing: 5;
+}
+
+.errorLabel {
+  -fx-text-fill: -fx-primary-color;
+}
+
+TextField {
+  -fx-background-color: -fx-border;
+}
