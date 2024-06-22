@@ -45,8 +45,12 @@ public class App {
   }
 
   public void createClients(String serverIp) {
-    // serverIp = getVariableServerIP();
+    String serverVariableIp = getVariableServerIP();
     String mode = getVariableMode();
+
+    if(serverVariableIp != null) {
+      serverIp = serverVariableIp;
+    }
 
     System.out.println("> IP do Servidor: " + serverIp);
     System.out.println("> Modo: " + mode);
