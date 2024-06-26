@@ -66,7 +66,7 @@ public class FakeClient extends Client {
       e.printStackTrace();
     }
 
-    System.out.println("> Servidor: <resposta>");
+    System.out.println("> Servidor Fake: <resposta>");
   }
 
 }

@@ -14,9 +14,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
 import model.App;
-import model.util.DataManager;
 
 public class TCPClient extends Client {
   private Socket socket;
@@ -69,7 +67,7 @@ public class TCPClient extends Client {
           String data = "";
           receivedObject = input.readObject();
           data = (String) receivedObject;
-          System.out.println("> Servidor: " + data);
+          System.out.println("> Servidor TCP: " + data);
           sanitizeReceivedData(data);
         } while (receivedObject != null);
       } catch (IOException | ClassNotFoundException e) {
@@ -78,24 +76,4 @@ public class TCPClient extends Client {
       }
     }).start();
   }
-
-  public void sanitizeReceivedData(String data) {
-    String[] dataSplited = data.split("/");
-    String type = dataSplited[0];
-
-    switch (type) {
-      case "send":
-        DataManager.receiveSend(dataSplited[1], dataSplited[2], dataSplited[3]);
-        break;
-      case "chat":
-        DataManager.receiveChat(dataSplited[1]);
-        break;
-      case "error":
-        DataManager.receiveError(dataSplited[1]);
-        break;
-      default:
-        return;
-    }
-  }
-
 }

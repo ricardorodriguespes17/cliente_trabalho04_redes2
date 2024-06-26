@@ -26,7 +26,8 @@ public class UDPClient extends Client {
 
   @Override
   public void connect() throws UnknownHostException, IOException {
-    socket = new DatagramSocket();
+    socket = new DatagramSocket(port);
+    socket.connect(InetAddress.getByName(host), port);
   }
 
   @Override
@@ -34,8 +35,6 @@ public class UDPClient extends Client {
     String message = new String("send/" + groupId + "/" + user + "/" + data);
     byte[] byteData = message.getBytes();
 
-    socket = new DatagramSocket();
-    socket.connect(InetAddress.getByName(host), port);
     socket.send(new DatagramPacket(byteData, byteData.length));
   }
 
@@ -51,7 +50,22 @@ public class UDPClient extends Client {
 
   @Override
   public void receive() throws IOException {
-    throw new UnsupportedOperationException("Unimplemented method 'receive'");
+    new Thread(() -> {
+      while (true) {
+        byte[] receivedData = new byte[1024];
+        DatagramPacket receivedDatagramPacket = new DatagramPacket(receivedData, receivedData.length);
+
+        try {
+          socket.receive(receivedDatagramPacket);
+          String data = new String(receivedDatagramPacket.getData());
+          System.out.println("> Servidor UDP: " + data);
+          sanitizeReceivedData(data);
+        } catch (IOException e) {
+          System.out.println("> Erro: não foi possível ler a mensagem do servidor UDP");
+          e.printStackTrace();
+        }
+      }
+    }).start();
   }
-  
+
 }

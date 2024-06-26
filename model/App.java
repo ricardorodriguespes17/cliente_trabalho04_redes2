@@ -87,6 +87,7 @@ public class App {
         tcpClient.connect();
         udpClient.connect();
         tcpClient.receive();
+        udpClient.receive();
         setError(null);
       } catch (IOException e) {
         setError("Houve um problema ao conectar o servidor");

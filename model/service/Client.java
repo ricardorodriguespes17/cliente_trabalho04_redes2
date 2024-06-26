@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 
 import model.App;
+import model.util.DataManager;
 
 public abstract class Client {
   protected int port;
@@ -34,6 +35,25 @@ public abstract class Client {
   public abstract void leave(String grupoId, String user) throws IOException;
 
   public abstract void receive() throws IOException;
+
+  public void sanitizeReceivedData(String data) {
+    String[] dataSplited = data.split("/");
+    String type = dataSplited[0];
+
+    switch (type) {
+      case "send":
+        DataManager.receiveSend(dataSplited[1], dataSplited[2], dataSplited[3]);
+        break;
+      case "chat":
+        DataManager.receiveChat(dataSplited[1]);
+        break;
+      case "error":
+        DataManager.receiveError(dataSplited[1]);
+        break;
+      default:
+        return;
+    }
+  }
 
   public static Client createClient(App app, String type, String serverAddress, int serverPort) {
     if (type.equals("TCP")) {
