@@ -50,8 +50,8 @@ public class LoginController implements Initializable {
 
     listener = (obs, wasLoading, isLoading) -> {
       if (!isLoading) {
+        goToMainScreen();
         if (app.getError() == null) {
-          goToMainScreen();
           app.isLoadingProperty().removeListener(listener);
         } else {
           errorLabel.setText(app.getError());

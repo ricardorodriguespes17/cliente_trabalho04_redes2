@@ -61,9 +61,9 @@ public class App {
     } else {
       tcpClient = Client.createClient(this, "TCP", serverIp, 6789);
       udpClient = Client.createClient(this, "UDP", serverIp, 6790);
+      startClient();
     }
 
-    startClient();
   }
 
   private String getVariableServerIP() {
