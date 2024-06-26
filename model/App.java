@@ -55,6 +55,8 @@ public class App {
     System.out.println("> IP do Servidor: " + serverIp);
     System.out.println("> Modo: " + mode);
 
+    this.serverIp = serverIp;
+
     if (mode != null && mode.equals("TEST")) {
       tcpClient = Client.createClient(this, mode, serverIp, 6789);
       udpClient = Client.createClient(this, mode, serverIp, 6790);
