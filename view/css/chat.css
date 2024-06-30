@@ -78,7 +78,7 @@
 
 .main .messageTime {
   -fx-font-size: 10;
-  -fx-min-width: 24;
+  -fx-min-width: 28;
 }
 
 .footer {
