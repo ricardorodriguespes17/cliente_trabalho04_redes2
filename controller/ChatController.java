@@ -68,14 +68,14 @@ public class ChatController implements Initializable {
 
   @FXML
   private void sendMessage() {
-    String value = inputMessage.getText();
+    String value = inputMessage.getText().trim();
 
-    if (value.trim().equals(""))
+    if (value.equals(""))
       return;
 
     LocalDateTime currentTime = LocalDateTime.now();
 
-    Message message = new Message(value.trim(), app.getLocalIp(), currentTime);
+    Message message = new Message(value, app.getLocalIp(), currentTime);
     messageSendListener = (obs, wasSend, isSend) -> {
       message.isSendProperty().removeListener(messageSendListener);
       renderMessages(null);
@@ -96,17 +96,14 @@ public class ChatController implements Initializable {
 
     ContextMenu menu = new ContextMenu();
     MenuItem menuSeach = new MenuItem("Pesquisar");
-    MenuItem menuSeeDetails = new MenuItem("Ver detalhes");
     MenuItem menuLeaveGroup = new MenuItem("Sair do grupo");
 
     double screenX = buttonMenu.localToScreen(buttonMenu.getBoundsInLocal()).getMinX();
     double screenY = buttonMenu.localToScreen(buttonMenu.getBoundsInLocal()).getMaxY();
-    menu.getItems().addAll(menuSeach, menuSeeDetails, menuLeaveGroup);
     double menuWidth = menu.prefWidth(-1);
     menu.show(buttonMenu, screenX - menuWidth, screenY);
 
     menuSeach.setOnAction(value -> onSearchRequest());
-    menuSeeDetails.setOnAction(value -> onSeeDetails());
     menuLeaveGroup.setOnAction(value -> confirmLeaveGroup());
 
     menu.setOnHidden(value -> {
@@ -164,25 +161,6 @@ public class ChatController implements Initializable {
       }
     };
     app.isLoadingProperty().addListener(listener);
-  }
-
-  private void onSeeDetails() {
-    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-    alert.setGraphic(null);
-    alert.setTitle("Dados do grupo");
-    alert.setHeaderText(chat.getChatName());
-
-    String details = "";
-
-    details += "Membros:\n" + "Marlos, Ricardo, Gil, Adryellen, Vitor, Ana Beatriz";
-
-    alert.setContentText(details);
-    alert.getButtonTypes().setAll(ButtonType.OK);
-    alert.getDialogPane().getStylesheets().addAll(
-        getClass().getResource("../view/css/common.css").toExternalForm(),
-        getClass().getResource("../view/css/dark.css").toExternalForm());
-
-    alert.show();
   }
 
   private void confirmLeaveGroup() {
