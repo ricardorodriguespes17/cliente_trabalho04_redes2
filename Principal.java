@@ -14,6 +14,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import controller.LoginController;
+import controller.AddUserController;
+import controller.ChatController;
+import controller.ContactsController;
+import controller.JoinChatController;
+import controller.MainController;
+import controller.SplashController;
 
 public class Principal extends Application {
   @Override
