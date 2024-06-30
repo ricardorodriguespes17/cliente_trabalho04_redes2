@@ -92,8 +92,8 @@ public class App {
         udpClient.receive();
         setError(null);
       } catch (IOException e) {
-        setError("Houve um problema ao conectar o servidor");
-        System.out.println("> Erro: Houve um problema ao conectar o servidor");
+        setError("Houve um problema ao se conectar com servidor");
+        System.out.println("> Erro: Houve um problema ao se conectar com servidor");
         return;
       } finally {
         Platform.runLater(() -> {

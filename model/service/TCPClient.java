@@ -12,6 +12,7 @@ package model.service;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import model.App;
@@ -27,12 +28,13 @@ public class TCPClient extends Client {
 
   @Override
   public void connect() throws UnknownHostException, IOException {
-    socket = new Socket(host, port);
+    socket = new Socket();
+    socket.connect(new InetSocketAddress(host, port), 3000);
     output = new ObjectOutputStream(socket.getOutputStream());
 
     String localIp = socket.getLocalAddress().getHostAddress();
     app.setLocalIp(localIp);
-    
+
     System.out.println("> Conectado ao servidor - IP: " + localIp);
   }
 

@@ -50,9 +50,8 @@ public class LoginController implements Initializable {
 
     listener = (obs, wasLoading, isLoading) -> {
       if (!isLoading) {
-        goToMainScreen();
         if (app.getError() == null) {
-          app.isLoadingProperty().removeListener(listener);
+          goToMainScreen();
         } else {
           errorLabel.setText(app.getError());
           errorLabel.setVisible(true);
@@ -60,6 +59,7 @@ public class LoginController implements Initializable {
           inputIp.setDisable(false);
           app.setError(null);
         }
+        app.isLoadingProperty().removeListener(listener);
       }
     };
 
