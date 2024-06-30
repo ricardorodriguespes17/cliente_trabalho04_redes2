@@ -100,6 +100,7 @@ public class ChatController implements Initializable {
 
     double screenX = buttonMenu.localToScreen(buttonMenu.getBoundsInLocal()).getMinX();
     double screenY = buttonMenu.localToScreen(buttonMenu.getBoundsInLocal()).getMaxY();
+    menu.getItems().addAll(menuSeach, menuLeaveGroup);
     double menuWidth = menu.prefWidth(-1);
     menu.show(buttonMenu, screenX - menuWidth, screenY);
 
